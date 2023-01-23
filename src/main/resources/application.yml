@@ -9,3 +9,6 @@ spring:
         username: postgres
         password: postgres
         driverClassName: org.postgresql.Driver
+springdoc:
+    swagger-ui:
+        operationsSorter: method

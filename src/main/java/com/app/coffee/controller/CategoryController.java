@@ -24,6 +24,9 @@ import com.app.coffee.service.CategoryService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.links.Link;
+import io.swagger.v3.oas.annotations.links.LinkParameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -33,71 +36,47 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/category")
-@Tag(
-    name = "Category API",
-    description = "APIs related to the Category of Products in the application."
-)
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
-    
-    //Get Mapping
-    @Operation(description = "Get All Categories.", responses = {
-            @ApiResponse(content = @Content(array = @ArraySchema(schema = @Schema(implementation = CategoryResponse.class))), responseCode = "200")
-    })
+
     @GetMapping
     public ResponseEntity<?> getAllCategories() {
         return ResponseEntity.ok(categoryService.getAllCategories());
     }
 
-    @Operation(description = "Get All Categories Pagination and Sort.", responses = {
-        @ApiResponse(content = @Content(array = @ArraySchema(schema = @Schema(implementation = CategoryResponse.class))), responseCode = "200")
-    })
     @GetMapping("/page")
-    public ResponseEntity<?> getAllCategories(@ParameterObject Pageable pageable) {
+    public ResponseEntity<?> getAllCategories(Pageable pageable) {
         return ResponseEntity.ok(categoryService.getAllCategories(pageable));
-    } 
+    }
 
-    @Operation(description = "Get Category By Category Id.", responses = {
-        @ApiResponse(content = @Content(array = @ArraySchema(schema = @Schema(implementation = CategoryResponse.class))), responseCode = "200")
-    })
     @GetMapping("/{categoryId}")
-    public ResponseEntity<?> getCategoryById(@PathVariable @Parameter(name = "Category ID") UUID categoryId){
+    public ResponseEntity<?> getCategoryById(
+            @PathVariable UUID categoryId) {
         return ResponseEntity.ok(categoryService.getCategoryById(categoryId));
     }
 
-    // Post Mapping
-    @Operation(description = "Create Category", responses = {
-        @ApiResponse(responseCode = "201")
-    })
     @PostMapping
-    public  ResponseEntity<?> createCategory(@RequestBody @Valid CreateCategoryRequest createCategoryRequest){
+    public ResponseEntity<?> createCategory(@RequestBody @Valid CreateCategoryRequest createCategoryRequest) {
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(categoryService.createCategory(createCategoryRequest).getId()).toUri();
+        System.out.println(location);
         return ResponseEntity.created(location).build();
     }
-  
-    // Put Mapping
-    @Operation(description = "Update Category By Category Id.", responses = {
-        @ApiResponse(responseCode = "204")
-    })
 
-    @PutMapping("/{categoryId}")
-    public ResponseEntity<?> updateCategory(@PathVariable @Parameter(name=" Category ID") UUID categoryId, @RequestBody @Valid UpdateCategoryRequest updateCategoryRequest){
+    @PutMapping("{categoryId}")
+    public ResponseEntity<?> updateCategory(
+            @PathVariable UUID categoryId,
+            @RequestBody @Valid UpdateCategoryRequest updateCategoryRequest) {
         categoryService.updateCategory(categoryId, updateCategoryRequest);
         return ResponseEntity.noContent().build();
     }
-    // Delete Mapping
-    @Operation(description = "Delete Category By Category Id.", responses = {
-        @ApiResponse(responseCode = "204")
-    })
 
-    @DeleteMapping("/{categoryId}")
-    public ResponseEntity<?> deleteCategory(@PathVariable @Parameter(name = "Category ID") UUID categoryId){
+    @DeleteMapping("{categoryId}")
+    public ResponseEntity<?> deleteCategory(
+            @PathVariable UUID categoryId) {
         categoryService.deleteCategory(categoryId);
         return ResponseEntity.noContent().build();
     }
-
-
 
 }

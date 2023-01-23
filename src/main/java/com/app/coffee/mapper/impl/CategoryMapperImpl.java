@@ -13,6 +13,9 @@ public class CategoryMapperImpl implements CategoryMapper {
 
     @Override
     public CategoryResponse toCategoryResponse(Category category) {
+        if (category == null){
+            return null;
+        }
         return CategoryResponse.builder()
             .id(category.getId())
             .name(category.getName())
