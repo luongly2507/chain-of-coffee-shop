@@ -5,9 +5,9 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.app.coffee.entity.Branch;
+import com.app.coffee.entity.Product;
 
 @Repository
-public interface BranchRepository extends JpaRepository<Branch, UUID> {
+public interface ProductRepository extends JpaRepository<Product,UUID>{
     
 }
