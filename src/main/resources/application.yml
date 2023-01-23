@@ -1,0 +1,11 @@
+spring:
+    jpa:
+        show-sql: true
+        hibernate:
+            ddl-auto: create
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+    datasource:
+        url: jdbc:postgresql://localhost:5432/coffee_db
+        username: postgres
+        password: postgres
+        driverClassName: org.postgresql.Driver
