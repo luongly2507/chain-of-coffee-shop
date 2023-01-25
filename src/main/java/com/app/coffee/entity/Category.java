@@ -41,7 +41,7 @@ public class Category extends Auditable<String> {
     @Column(nullable = false, unique = true, length = 100)
     private String name;
     
-    @Column(nullable = true)
+    @Column(nullable = true, columnDefinition = "TEXT")
     private String description;
     
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)

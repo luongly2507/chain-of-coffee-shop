@@ -3,7 +3,6 @@ package com.app.coffee.controller;
 import java.net.URI;
 import java.util.UUID;
 
-import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -19,23 +18,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.app.coffee.payload.request.CreateCategoryRequest;
 import com.app.coffee.payload.request.UpdateCategoryRequest;
-import com.app.coffee.payload.response.CategoryResponse;
 import com.app.coffee.service.CategoryService;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.links.Link;
-import io.swagger.v3.oas.annotations.links.LinkParameter;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/category")
+@RequestMapping("/api/v1/categories")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;

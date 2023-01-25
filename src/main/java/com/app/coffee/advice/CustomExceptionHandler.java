@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -75,4 +76,15 @@ public class CustomExceptionHandler {
                 });
                 return new ResponseEntity<>(errorMap, HttpStatus.BAD_REQUEST);
         }        
+        @ExceptionHandler(DataIntegrityViolationException.class)
+        public ResponseEntity<?>  handleDataIntegrityViolationException(DataIntegrityViolationException ex){
+                return ResponseEntity
+                                .status(HttpStatus.NOT_FOUND)
+                                .body(ErrorMessageResponse
+                                                .builder()
+                                                .message(ex.getMessage())
+                                                .statusCode(400)
+                                                .timeStamp(LocalDateTime.now())
+                                                .build());
+        }
 }

@@ -1,0 +1,37 @@
+
+html, body{
+    height: 100%;
+}
+
+#aside {
+    display: block;
+    background-color: hsl(210deg 8% 20%);  
+    padding: 15px;
+
+}
+#aside-header {
+    padding-bottom: 15px;
+    border-bottom: 1px solid lightgray;
+} 
+#aside-body .list-group {
+    margin-top: 25px;
+}
+#aside-body .list-group-item{
+    background-color: transparent;
+    border: none;
+    color: gray;
+    font-weight: bold;
+    margin-bottom: 25px;
+    cursor: pointer;
+}
+#aside-body .list-group-item a{
+    color: gray;
+    text-decoration: none;
+}
+#aside-body .list-group-item:hover,.list-group-item a:hover{
+    color: burlywood !important;
+}
+#header {
+    height: 75px;
+    padding-left: 15px;
+}

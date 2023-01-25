@@ -20,6 +20,9 @@ public class CategoryMapperImpl implements CategoryMapper {
             .id(category.getId())
             .name(category.getName())
             .description(category.getDescription())
+            .createdBy(category.getCreatedBy())
+            .lastModifiedAt(category.getLastModifiedAt())
+            .lastModifiedBy(category.getLastModifiedBy())
             .build();
     }
 
