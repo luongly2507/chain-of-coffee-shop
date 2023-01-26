@@ -1,5 +1,6 @@
 package com.app.coffee.payload.response;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
@@ -16,4 +17,8 @@ public class BranchResponse {
     private String name;
     private String address;
     private String description;
+    private LocalDateTime lastModifiedAt;
+    private String createdBy;
+    private LocalDateTime createdAt;
+    private String lastModifiedBy;
 }
