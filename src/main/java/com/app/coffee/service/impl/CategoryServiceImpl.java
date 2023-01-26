@@ -77,7 +77,7 @@ public class CategoryServiceImpl implements CategoryService{
             .orElseThrow(
                 ()-> new ResourceNotFoundException("Category Not Found."));
           // Check name is unique
-          if (!updateCategoryRequest.getName().equals(category.getName())) {
+          if (!updateCategoryRequest.getName().equals(category.getName())) { // compare request name and repository name
             if (categoryRepository.existsByName(updateCategoryRequest.getName())) {
                 throw new ConflictException("Already Name Exists.");
             }
@@ -94,6 +94,11 @@ public class CategoryServiceImpl implements CategoryService{
         } else {
             throw new ResourceNotFoundException("Category Not Found");  // Check category is present
         }
+    }
+
+    @Override
+    public Page<CategoryResponse> getAllCategoriesByName(String search, Pageable pageable) {
+        return  categoryRepository.findByName(search.toLowerCase(),pageable).map(category->categoryMapper.toCategoryResponse(category));
     }
 
 

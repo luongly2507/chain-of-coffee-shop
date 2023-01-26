@@ -9,5 +9,12 @@ public class ApplicationController {
     public String adminPage(){
         return "admin";
     }
-    
+    @GetMapping("/order")
+    public String orderPage(){
+        return "order";
+    }
+    @GetMapping("/login")
+    public String loginPage(){
+        return "login";
+    }
 }

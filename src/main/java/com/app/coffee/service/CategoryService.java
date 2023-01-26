@@ -20,5 +20,6 @@ public interface CategoryService {
     public void deleteCategory(UUID categoryId);
     public CategoryResponse createCategory(@Valid CreateCategoryRequest createCategoryRequest);
     public void updateCategory(UUID categoryId, @Valid UpdateCategoryRequest updateCategoryRequest);
+    public Page<CategoryResponse> getAllCategoriesByName(String search, Pageable pageable);
 
 }

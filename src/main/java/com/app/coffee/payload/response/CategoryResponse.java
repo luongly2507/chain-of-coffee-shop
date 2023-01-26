@@ -18,5 +18,6 @@ public class CategoryResponse {
     private String description;
     private LocalDateTime lastModifiedAt;
     private String createdBy;
+    private LocalDateTime createdAt;
     private String lastModifiedBy;
 }

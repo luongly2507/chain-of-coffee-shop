@@ -1,37 +1,42 @@
-
-html, body{
+html,
+body {
     height: 100%;
 }
 
-#aside {
+aside {
     display: block;
-    background-color: hsl(210deg 8% 20%);  
-    padding: 15px;
+    background-color: hsl(210deg 8% 20%);
+    overflow-y: auto;
+}
+
+aside #aside-header {
+    height: 35px;
+    margin-top: 25px;
+    padding-left: 15px;
+    border-bottom: 1px solid gray;
+}
+
+aside #aside-body {
+    padding-left: 15px;
 
 }
-#aside-header {
-    padding-bottom: 15px;
-    border-bottom: 1px solid lightgray;
-} 
-#aside-body .list-group {
-    margin-top: 25px;
-}
-#aside-body .list-group-item{
-    background-color: transparent;
-    border: none;
-    color: gray;
+
+.nav-link {
+    color: white;
     font-weight: bold;
-    margin-bottom: 25px;
-    cursor: pointer;
+    text-align: start;
+    margin-top: 15px;
 }
-#aside-body .list-group-item a{
-    color: gray;
-    text-decoration: none;
+
+.nav-link:hover {
+    color: burlywood;
 }
-#aside-body .list-group-item:hover,.list-group-item a:hover{
-    color: burlywood !important;
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+
+    background-color: burlywood;
 }
-#header {
-    height: 75px;
-    padding-left: 15px;
+header {
+    height: 60px;
 }
