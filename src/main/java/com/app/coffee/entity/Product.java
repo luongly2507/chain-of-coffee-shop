@@ -49,6 +49,6 @@ public class Product extends Auditable<String>{
     @ToString.Exclude
     private Category category;
     
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String description;
 }

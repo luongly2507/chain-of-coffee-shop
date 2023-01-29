@@ -9,6 +9,10 @@ spring:
         username: postgres
         password: postgres
         driverClassName: org.postgresql.Driver
-springdoc:
-    swagger-ui:
-        operationsSorter: method
+    servlet:
+        multipart:
+            max-file-size: 5000KB
+            max-request-size: 5000KB
+    devtools:
+        restart:
+            additional-exclude: upload/**

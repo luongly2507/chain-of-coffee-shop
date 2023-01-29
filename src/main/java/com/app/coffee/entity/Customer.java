@@ -28,7 +28,6 @@ public class Customer extends Auditable<String>{
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
     @GeneratedValue(generator = "uuid")
     private UUID id;
-
     private String name;
     private String gender;
     private String telephone;
