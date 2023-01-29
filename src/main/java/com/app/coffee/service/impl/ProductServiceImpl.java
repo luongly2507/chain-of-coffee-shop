@@ -1,5 +1,6 @@
 package com.app.coffee.service.impl;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.app.coffee.entity.Product;
@@ -41,23 +43,23 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductResponse> getAllProducts() {
         return productRepository.findAll().stream().map(
-            product -> productMapper.toProductResponse(product)
-        ).toList();
+                product -> productMapper.toProductResponse(product)).toList();
     }
 
     // Get Mapping - Get By Page
     @Override
     public Page<ProductResponse> getAllProducts(Pageable pageable) {
         return productRepository.findAll(pageable)
-        .map(product->productMapper.toProductResponse(product));
+                .map(product -> productMapper.toProductResponse(product));
     }
 
     // Get Mapping - Get By Id
     @Override
     public ProductResponse getProductById(UUID productId) {
         return productMapper.toProductResponse(
-            productRepository.findById(productId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Product Not Found"))); // Check product is present
+                productRepository.findById(productId)
+                        .orElseThrow(() -> new ResourceNotFoundException("Product Not Found"))); // Check product is
+                                                                                                 // present
     }
 
     // Post Mapping - Create Product
@@ -68,23 +70,32 @@ public class ProductServiceImpl implements ProductService {
         if (product == null) {
             throw new BadRequestException("Bad Request");
         }
-         // Check name is unique
+        // Check name is unique
         if (productRepository.existsByName(createProductRequest.getName())) {
             throw new ConflictException("Already Name Exists.");
         }
 
         product.setImage(storageService.store(image));
-        return productMapper.toProductResponse(productRepository.save(product));       
+        return productMapper.toProductResponse(productRepository.save(product));
     }
 
     // Put Mapping - Update Product
     @Override
-    public void updateProduct(UUID productId, @Valid UpdateProductRequest updateProductRequest) {
+    public void updateProduct(UUID productId, MultipartFile image, @Valid UpdateProductRequest updateProductRequest) {
         Product product = productRepository.findById(productId)
-            .orElseThrow(
-                ()-> new ResourceNotFoundException("Product Not Found."));
-          // Check name is unique
-          if (!updateProductRequest.getName().equals(product.getName())) { // compare request name and repository name
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("Product Not Found."));
+        // Check image
+        if (image != null) {
+            try {
+                FileSystemUtils.deleteRecursively(storageService.load(product.getImage()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            product.setImage(storageService.store(image));
+        }
+        // Check name is unique
+        if (!updateProductRequest.getName().equals(product.getName())) { // compare request name and repository name
             if (productRepository.existsByName(updateProductRequest.getName())) {
                 throw new ConflictException("Already Name Exists.");
             }
@@ -96,16 +107,22 @@ public class ProductServiceImpl implements ProductService {
     // Delete Mapping -
     @Override
     public void deleteProduct(UUID productId) {
-        if (productRepository.existsById(productId)) {
-            productRepository.deleteById(productId);
-        } else {
-            throw new ResourceNotFoundException("Product Not Found");  // Check product is present
+       
+        try {
+            Product product = productRepository.findById(productId)
+            .orElseThrow(
+                    () -> new ResourceNotFoundException("Product Not Found."));
+            FileSystemUtils.deleteRecursively(storageService.load(product.getImage()));
+            productRepository.delete(product);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
     public Page<ProductResponse> getAllProductsByName(String search, Pageable pageable) {
-        return  productRepository.findByName(search.toLowerCase(),pageable).map(product->productMapper.toProductResponse(product));
+        return productRepository.findByName(search.toLowerCase(), pageable)
+                .map(product -> productMapper.toProductResponse(product));
     }
-    
+
 }

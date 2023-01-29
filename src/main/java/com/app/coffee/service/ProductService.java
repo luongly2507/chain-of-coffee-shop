@@ -19,6 +19,6 @@ public interface ProductService {
     public ProductResponse getProductById(UUID productId);
     public void deleteProduct(UUID productId);
     public ProductResponse createProduct(MultipartFile image, @Valid CreateProductRequest createProductRequest);
-    public void updateProduct(UUID productId, @Valid UpdateProductRequest updateProductRequest);
+    public void updateProduct(UUID productId, MultipartFile image,  @Valid UpdateProductRequest updateProductRequest);
     public Page<ProductResponse> getAllProductsByName(String search, Pageable pageable);
 }

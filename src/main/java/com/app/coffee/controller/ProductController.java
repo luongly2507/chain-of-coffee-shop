@@ -60,8 +60,9 @@ public class ProductController {
     @PutMapping("{productId}")
     public ResponseEntity<?> updateProduct(
             @PathVariable UUID productId,
-            @RequestBody @Valid UpdateProductRequest updateProductRequest) {
-        productService.updateProduct(productId, updateProductRequest);
+            @RequestParam(value ="image", required=false) MultipartFile image,
+            @Valid UpdateProductRequest updateProductRequest) {
+        productService.updateProduct(productId,image, updateProductRequest);
         return ResponseEntity.noContent().build();
     }
 

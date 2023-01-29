@@ -7,6 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.stream.Stream;
 
 import org.springframework.core.io.Resource;
@@ -38,8 +40,17 @@ public class FileSystemStorageService implements StorageService {
 			}
 			// Create custom filename
 			String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+			
+			// Get extension
+			String ext = fileName.substring(fileName.lastIndexOf("."),fileName.length());
+			System.out.println(ext);
+			fileName = fileName.substring(0,fileName.length()- ext.length());
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss");
+			String formatDateTime = LocalDateTime.now().format(formatter);
 			// remove spaces and make lowercase
+			fileName = fileName.concat(formatDateTime).concat(ext);
 			fileName = fileName.toLowerCase().replaceAll(" ", "-");
+			System.out.println(fileName);
 			Path destinationFile = this.rootLocation.resolve(
 					Paths.get(file.getOriginalFilename()))
 					.normalize().toAbsolutePath();
