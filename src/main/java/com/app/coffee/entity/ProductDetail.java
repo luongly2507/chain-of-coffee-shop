@@ -1,5 +1,7 @@
 package com.app.coffee.entity;
 
+import com.app.coffee.entity.key.ProductDetailId;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;

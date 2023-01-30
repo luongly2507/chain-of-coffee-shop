@@ -1,5 +1,6 @@
 package com.app.coffee.entity;
 
+import java.util.Collection;
 import java.util.UUID;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -10,6 +11,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -44,5 +48,17 @@ public class User extends Auditable<String>{
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private String email;
+
+    @ManyToMany 
+    @JoinTable( 
+        name = "users_roles", 
+        joinColumns = @JoinColumn(
+          name = "users_id", referencedColumnName = "id"), 
+        inverseJoinColumns = @JoinColumn(
+          name = "role_id", referencedColumnName = "id")) 
+    private Collection<Role> roles;
                   
 }

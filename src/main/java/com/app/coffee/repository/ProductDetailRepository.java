@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.app.coffee.entity.ProductDetail;
-import com.app.coffee.entity.ProductDetailId;
+import com.app.coffee.entity.key.ProductDetailId;
 
 @Repository
 public interface ProductDetailRepository extends JpaRepository<ProductDetail, ProductDetailId>{

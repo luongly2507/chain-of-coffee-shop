@@ -1,4 +1,4 @@
-package com.app.coffee.entity;
+package com.app.coffee.entity.key;
 
 import java.util.UUID;
 
@@ -9,15 +9,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper=false)
 @Embeddable
-public class BranchDetailId {
-    @Column (name = "branch_id")
-    private UUID branchId;
-    @Column (name = "users_id")
-    private UUID userID;
+public class OrderDetailId {
+    @Column(name="order_id")
+    private UUID orderID;
+    @Column(name="product_id")
+    private UUID productID;
 }

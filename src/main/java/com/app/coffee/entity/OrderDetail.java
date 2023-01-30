@@ -1,6 +1,6 @@
 package com.app.coffee.entity;
 
-import com.app.coffee.entity.key.BranchDetailId;
+import com.app.coffee.entity.key.OrderDetailId;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,21 +20,29 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper=false)
-@Entity(name = "branch_detail")
-public class BranchDetail {
+@Entity(name = "order_detail")
+public class OrderDetail {
     @EmbeddedId
-    private BranchDetailId id;
-
+    private OrderDetailId orderDetailId;
+    
     @ManyToOne
-    @MapsId("users_id")
-    @JoinColumn(name = "users_id")
-    private User user;
+    @MapsId("product_id")
+    @JoinColumn(name = "product_id")
+    private Product product;
 
+    
     @ManyToOne
-    @MapsId("branch_id")
-    @JoinColumn(name = "branch_id")
-    private Branch branch;
+    @MapsId("order_id")
+    @JoinColumn(name = "order_id")
+    private Product order;
 
     @Column
-    private String description;
+    @Min(0)
+    private int quantity;
+    
+    @Column(nullable = true)
+    private String ice;
+
+    @Column(nullable = true)
+    private String sugar;
 }
