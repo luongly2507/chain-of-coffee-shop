@@ -16,3 +16,11 @@ spring:
     devtools:
         restart:
             additional-exclude: upload/**
+    main:
+        allow-circular-references: true
+
+app:
+    jwtSecret: pjQjSF7iurbI7Cd0z+MMak9Zi28CtQoCueyP3YGP1g3GfvzbyRBaUK3O8hMQyH/JkFoH5wAZqHU4w+IMwGqtdQ==
+    jwtExpirationMs: 60000
+    jwtRefreshExpirationMs: 120000
+    

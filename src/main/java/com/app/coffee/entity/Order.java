@@ -24,10 +24,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Entity(name = "order")
+@Entity(name = "orders")
 public class Order {
     @Id
-    @Column(name = "id")
+    @Column(nullable = false, updatable = false)
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
@@ -45,7 +45,7 @@ public class Order {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id",referencedColumnName="id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Customer customer;

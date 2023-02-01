@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper=false)
-@Entity(name = "order_detail")
+@Entity(name = "orders_detail")
 public class OrderDetail {
     @EmbeddedId
     private OrderDetailId orderDetailId;
@@ -32,8 +32,8 @@ public class OrderDetail {
 
     
     @ManyToOne
-    @MapsId("order_id")
-    @JoinColumn(name = "order_id")
+    @MapsId("orders_id")
+    @JoinColumn(name = "orders_id")
     private Product order;
 
     @Column

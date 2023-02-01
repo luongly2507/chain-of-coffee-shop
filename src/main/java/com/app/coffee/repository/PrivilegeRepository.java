@@ -9,5 +9,5 @@ import com.app.coffee.entity.Privilege;
 
 @Repository
 public interface PrivilegeRepository extends JpaRepository<Privilege, UUID>{
-    
+    Privilege findByName(String name);
 }

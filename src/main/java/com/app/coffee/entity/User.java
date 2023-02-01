@@ -1,5 +1,6 @@
 package com.app.coffee.entity;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -52,6 +53,9 @@ public class User extends Auditable<String>{
     @Column(nullable = false)
     private String email;
 
+    @Column(nullable = false)
+    private LocalDate birthday;
+    
     @ManyToMany 
     @JoinTable( 
         name = "users_roles", 

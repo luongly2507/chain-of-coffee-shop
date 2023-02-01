@@ -37,7 +37,7 @@ public class Category extends Auditable<String> {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     private UUID id;
-
+    
     @Column(nullable = false, unique = true, length = 100)
     private String name;
     

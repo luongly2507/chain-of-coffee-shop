@@ -9,5 +9,7 @@ import com.app.coffee.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,UUID>{
-    
+    User findByEmail(String email);
+    boolean existsByEmail(String email);
+    boolean existsByTelephone(String telephone);
 }
