@@ -1,0 +1,76 @@
+{
+	"info": {
+		"_postman_id": "3a4c85e3-969d-4006-ac1b-375b1c7752dd",
+		"name": "Customer API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "17906141-3a4c85e3-969d-4006-ac1b-375b1c7752dd"
+	},
+	"item": [
+		{
+			"name": "Create Customer",
+			"id": "f3866f98-b9a7-464e-a2a2-75067e6b4d34",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Long\",\r\n    \"gender\": \"Nam\",\r\n    \"telephone\" : \"0111111111\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Customer By Name And Telephone",
+			"id": "64a8cbd8-d6b3-4881-804f-92a29797e777",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/customers/search?key=1111111",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"customers",
+						"search"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "1111111"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

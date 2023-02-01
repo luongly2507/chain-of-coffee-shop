@@ -13,10 +13,20 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHVuZ3RhaTEwMTFAZ21haWwuY29tIiwiaWF0IjoxNjc1MjY2ODAzLCJleHAiOjE2NzUyNjY4NjN9.kFOqVetqDH-a8erT_qVK1xtKiZ06FnGtzyEjeZFmG36slo1KTZxb7SOF2heer9x9Td8VkSiwZgdXmusPGCLFuw",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/api/v1/category",
+					"raw": "localhost:8080/api/v1/categories",
 					"host": [
 						"localhost"
 					],
@@ -24,7 +34,7 @@
 					"path": [
 						"api",
 						"v1",
-						"category"
+						"categories"
 					]
 				}
 			},
@@ -85,10 +95,20 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHVuZ3RhaTEwMTFAZ21haWwuY29tIiwiaWF0IjoxNjc1MjY2ODAzLCJleHAiOjE2NzUyNjY4NjN9.kFOqVetqDH-a8erT_qVK1xtKiZ06FnGtzyEjeZFmG36slo1KTZxb7SOF2heer9x9Td8VkSiwZgdXmusPGCLFuw",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/api/v1/category/0bcb1e8f-d4bd-4c72-ab92-15d303ef963f",
+					"raw": "localhost:8080/api/v1/category/c89dca3d-0c45-4f78-9947-cdd4a54ab121",
 					"host": [
 						"localhost"
 					],
@@ -97,7 +117,7 @@
 						"api",
 						"v1",
 						"category",
-						"0bcb1e8f-d4bd-4c72-ab92-15d303ef963f"
+						"c89dca3d-0c45-4f78-9947-cdd4a54ab121"
 					]
 				}
 			},
@@ -159,10 +179,20 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHVuZ3RhaTEwMTFAZ21haWwuY29tIiwiaWF0IjoxNjc1MjY2ODAzLCJleHAiOjE2NzUyNjY4NjN9.kFOqVetqDH-a8erT_qVK1xtKiZ06FnGtzyEjeZFmG36slo1KTZxb7SOF2heer9x9Td8VkSiwZgdXmusPGCLFuw",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/api/v1/category/page?size=5",
+					"raw": "localhost:8080/api/v1/categories/page?size=5",
 					"host": [
 						"localhost"
 					],
@@ -170,14 +200,13 @@
 					"path": [
 						"api",
 						"v1",
-						"category",
+						"categories",
 						"page"
 					],
 					"query": [
 						{
 							"key": "size",
-							"value": "5",
-							"type": "text"
+							"value": "5"
 						}
 					]
 				}
@@ -330,11 +359,21 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHVuZ3RhaTEwMTFAZ21haWwuY29tIiwiaWF0IjoxNjc1MjY2ODAzLCJleHAiOjE2NzUyNjY4NjN9.kFOqVetqDH-a8erT_qVK1xtKiZ06FnGtzyEjeZFmG36slo1KTZxb7SOF2heer9x9Td8VkSiwZgdXmusPGCLFuw",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Coffee\",\r\n    \"descrition\" : \"Coffee...\"\r\n}",
+					"raw": "{\r\n    \"name\": \"Coffeeeeeeeee\",\r\n    \"descrition\" : \"Coffee...\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -342,7 +381,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/api/v1/category",
+					"raw": "localhost:8080/api/v1/categories",
 					"host": [
 						"localhost"
 					],
@@ -350,7 +389,7 @@
 					"path": [
 						"api",
 						"v1",
-						"category"
+						"categories"
 					]
 				}
 			},
@@ -423,7 +462,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/api/v1/category/b3cdd100-89b1-4e75-a02e-4bf42a8e466f",
+					"raw": "localhost:8080/api/v1/category/aea424b2-2b74-4c39-976b-48f67a4ac617",
 					"host": [
 						"localhost"
 					],
@@ -432,7 +471,7 @@
 						"api",
 						"v1",
 						"category",
-						"b3cdd100-89b1-4e75-a02e-4bf42a8e466f"
+						"aea424b2-2b74-4c39-976b-48f67a4ac617"
 					]
 				}
 			},

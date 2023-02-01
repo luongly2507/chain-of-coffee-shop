@@ -1,0 +1,154 @@
+{
+	"info": {
+		"_postman_id": "ea4454a7-04d7-4f15-b93e-893fec1262f1",
+		"name": "Auth API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "17906141-ea4454a7-04d7-4f15-b93e-893fec1262f1"
+	},
+	"item": [
+		{
+			"name": "Sign Up Request",
+			"id": "536e7f01-3a8c-4d48-a60f-378da174015f",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"chungtai1011@gmail.com\",\r\n    \"name\"  : \"Chung Tài\",\r\n    \"gender\": \"Nam\",\r\n    \"role\" : [\"admin\"],\r\n    \"telephone\" : \"0783600360\",\r\n    \"address\": \"Topaz home 2\",\r\n    \"password\" : \"10112000\",\r\n    \"birthday\" : \"2000-11-10\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/sign-up",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"sign-up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign In Request",
+			"id": "405a0150-a7b1-4161-b259-d51b1c504481",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"chungtai1011@gmail.com\",\r\n    \"password\" : \"10112000\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/sign-in",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"sign-in"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh Token",
+			"id": "53232722-9e38-4726-ae2b-63db4c41c663",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"refreshToken\": \"0d973463-5ffc-45c9-955b-447c8c421b2f\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/refresh-token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"refresh-token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign Out Request",
+			"id": "4b0aa41d-e3ad-42c2-aae6-aabe712284bb",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "        System.out.println(SecurityContextHolder.getContext().getAuthentication());\n",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaHVuZ3RhaTEwMTFAZ21haWwuY29tIiwiaWF0IjoxNjc1MjUzODUxLCJleHAiOjE2NzUyNTM5MTF9.N0b0v7lEXFWAr_JNyINUNtH56iJ6JDo7YuYR09QjFnT43vPf79_sMGoQshAHIRFOwhOXB_ax_vzjUX7rWDSpEw",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/auth/sign-out",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"sign-out"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

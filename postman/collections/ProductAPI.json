@@ -1,0 +1,61 @@
+{
+	"info": {
+		"_postman_id": "47aae748-fcff-4198-a2b7-6d0000f2b1a2",
+		"name": "ProductAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "17906141-47aae748-fcff-4198-a2b7-6d0000f2b1a2"
+	},
+	"item": [
+		{
+			"name": "Delete Product By ID",
+			"id": "dfb36b19-51ba-4822-bc04-16d27294c791",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/Administrator/Desktop/7d7c3f0 84c788026d969.jpg"
+						},
+						{
+							"key": "name",
+							"value": "Coffee Sữa",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "categoryID",
+							"value": "62f9f02f-b46f-4330-98d9-21acbb8fb6cb",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/products/fdbed419-1caa-4b86-8f80-dd5687a1d004",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"fdbed419-1caa-4b86-8f80-dd5687a1d004"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
