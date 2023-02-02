@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,25 +31,30 @@ public class BranchController {
     private BranchService branchService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('PRIVILEGE_READ_BRANCH')")
     public ResponseEntity<?> getAllBranchs() {
         return ResponseEntity.ok(branchService.getAllBranchs());
     }
 
     @GetMapping("/page")
+    @PreAuthorize("hasAuthority('PRIVILEGE_READ_BRANCH')")
     public ResponseEntity<?> getAllBranchs(Pageable pageable) {
         return ResponseEntity.ok(branchService.getAllBranchs(pageable));
     }
     @GetMapping("/search")
+    @PreAuthorize("hasAuthority('PRIVILEGE_READ_BRANCH')")
     public ResponseEntity<?> getAllBranchsByName(@RequestParam String key, Pageable pageable) {
         return ResponseEntity.ok(branchService.getAllBranchsByName(key,pageable));
     }
     @GetMapping("/{branchId}")
+    @PreAuthorize("hasAuthority('PRIVILEGE_READ_BRANCH')")
     public ResponseEntity<?> getBranchById(
             @PathVariable UUID branchId) {
         return ResponseEntity.ok(branchService.getBranchById(branchId));
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('PRIVILEGE_CREATE_BRANCH')")
     public ResponseEntity<?> createBranch(@RequestBody @Valid CreateBranchRequest createBranchRequest) {
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(branchService.createBranch(createBranchRequest).getId()).toUri();
@@ -57,6 +63,7 @@ public class BranchController {
     }
 
     @PutMapping("{branchId}")
+    @PreAuthorize("hasAuthority('PRIVILEGE_UPDATE_BRANCH')")
     public ResponseEntity<?> updateBranch(
             @PathVariable UUID branchId,
             @RequestBody @Valid UpdateBranchRequest updateBranchRequest) {
@@ -65,6 +72,7 @@ public class BranchController {
     }
 
     @DeleteMapping("{branchId}")
+    @PreAuthorize("hasAuthority('PRIVILEGE_DELETE_BRANCH')")
     public ResponseEntity<?> deleteBranch(
             @PathVariable UUID branchId) {
         branchService.deleteBranch(branchId);

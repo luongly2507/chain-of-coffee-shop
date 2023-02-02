@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,25 +31,30 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('PRIVILEGE_READ_CUSTOMER')")
     public ResponseEntity<?> getAllCustomers() {
         return ResponseEntity.ok(customerService.getAllCustomers());
     }
 
     @GetMapping("/page")
+    @PreAuthorize("hasAuthority('PRIVILEGE_READ_CUSTOMER')")
     public ResponseEntity<?> getAllCustomers(Pageable pageable) {
         return ResponseEntity.ok(customerService.getAllCustomers(pageable));
     }
     @GetMapping("/search")
+    @PreAuthorize("hasAuthority('PRIVILEGE_READ_CUSTOMER')")
     public ResponseEntity<?> getAllCustomersByName(@RequestParam String key, Pageable pageable) {
         return ResponseEntity.ok(customerService.searchCustomer(key,pageable));
     }
     @GetMapping("/{customerId}")
+    @PreAuthorize("hasAuthority('PRIVILEGE_READ_CUSTOMER')")
     public ResponseEntity<?> getCustomerById(
             @PathVariable UUID customerId) {
         return ResponseEntity.ok(customerService.getCustomerById(customerId));
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('PRIVILEGE_CREATE_CUSTOMER')")
     public ResponseEntity<?> createCustomer(@RequestBody @Valid CreateCustomerRequest createCustomerRequest) {
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(customerService.createCustomer(createCustomerRequest).getId()).toUri();
@@ -57,6 +63,7 @@ public class CustomerController {
     }
 
     @PutMapping("{customerId}")
+    @PreAuthorize("hasAuthority('PRIVILEGE_UPDATE_CUSTOMER')")
     public ResponseEntity<?> updateCustomer(
             @PathVariable UUID customerId,
             @RequestBody @Valid UpdateCustomerRequest updateCustomerRequest) {
@@ -65,6 +72,7 @@ public class CustomerController {
     }
 
     @DeleteMapping("{customerId}")
+    @PreAuthorize("hasAuthority('PRIVILEGE_DELETE_CUSTOMER')")
     public ResponseEntity<?> deleteCustomer(
             @PathVariable UUID customerId) {
         customerService.deleteCustomer(customerId);

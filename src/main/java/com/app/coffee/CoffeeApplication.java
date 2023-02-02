@@ -13,7 +13,6 @@ import com.app.coffee.config.StorageProperties;
 @EnableJpaRepositories
 @CrossOrigin
 public class CoffeeApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(CoffeeApplication.class, args);
 	}

@@ -1,22 +1,25 @@
 package com.app.coffee.entity;
 
+import java.util.Collection;
 import java.util.UUID;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
+    
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,4 +40,11 @@ public class Tag {
     private Branch branch;
 
     private String name;
+
+    private String status;
+    
+    @OneToMany(mappedBy = "tag", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<Order> orders;
 }

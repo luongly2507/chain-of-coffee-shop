@@ -1,15 +1,18 @@
 package com.app.coffee.entity;
 
+import java.util.Collection;
 import java.util.UUID;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
@@ -41,6 +44,7 @@ public class Order {
     @Max(100)
     private Double discount;
 
+
     @Column(columnDefinition = "TEXT")
     private String description;
 
@@ -49,4 +53,16 @@ public class Order {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "tag_id",referencedColumnName="id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Tag tag;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<OrderDetail> orderDetails;
+
 }

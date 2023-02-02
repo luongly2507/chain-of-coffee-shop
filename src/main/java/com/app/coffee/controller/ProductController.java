@@ -6,12 +6,12 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,25 +31,30 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('PRIVILEGE_READ_PRODUCT')")
     public ResponseEntity<?> getAllProducts() {
         return ResponseEntity.ok(productService.getAllProducts());
     }
 
     @GetMapping("/page")
+    @PreAuthorize("hasAuthority('PRIVILEGE_READ_PRODUCT')")
     public ResponseEntity<?> getAllProducts(Pageable pageable) {
         return ResponseEntity.ok(productService.getAllProducts(pageable));
     }
     @GetMapping("/search")
+    @PreAuthorize("hasAuthority('PRIVILEGE_READ_PRODUCT')")
     public ResponseEntity<?> getAllProductsByName(@RequestParam String key, Pageable pageable) {
         return ResponseEntity.ok(productService.getAllProductsByName(key,pageable));
     }
     @GetMapping("/{productId}")
+    @PreAuthorize("hasAuthority('PRIVILEGE_READ_PRODUCT')")
     public ResponseEntity<?> getProductById(
             @PathVariable UUID productId) {
         return ResponseEntity.ok(productService.getProductById(productId));
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('PRIVILEGE_CREATE_PRODUCT')")
     public ResponseEntity<?> createProduct(@RequestParam MultipartFile image, @Valid CreateProductRequest createProductRequest) {
         System.out.println(createProductRequest);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -58,6 +63,7 @@ public class ProductController {
     }
 
     @PutMapping("{productId}")
+    @PreAuthorize("hasAuthority('PRIVILEGE_UPDATE_PRODUCT')")
     public ResponseEntity<?> updateProduct(
             @PathVariable UUID productId,
             @RequestParam(value ="image", required=false) MultipartFile image,
@@ -67,6 +73,7 @@ public class ProductController {
     }
 
     @DeleteMapping("{productId}")
+    @PreAuthorize("hasAuthority('PRIVILEGE_DELETE_PRODUCT')")
     public ResponseEntity<?> deleteProduct(
             @PathVariable UUID productId) {
         productService.deleteProduct(productId);

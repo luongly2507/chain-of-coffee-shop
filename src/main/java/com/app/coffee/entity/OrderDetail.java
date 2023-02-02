@@ -34,7 +34,7 @@ public class OrderDetail {
     @ManyToOne
     @MapsId("orders_id")
     @JoinColumn(name = "orders_id")
-    private Product order;
+    private Order order;
 
     @Column
     @Min(0)

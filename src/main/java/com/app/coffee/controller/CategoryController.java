@@ -56,8 +56,6 @@ public class CategoryController {
             @PathVariable UUID categoryId) {
         return ResponseEntity.ok(categoryService.getCategoryById(categoryId));
     }
-
-
     @PostMapping
     @PreAuthorize("hasAuthority('PRIVILEGE_CREATE_CATEGORY')")
     public ResponseEntity<?> createCategory(@RequestBody @Valid CreateCategoryRequest createCategoryRequest) {
@@ -68,7 +66,7 @@ public class CategoryController {
     }
 
     @PutMapping("{categoryId}")
-
+    @PreAuthorize("hasAuthority('PRIVILEGE_UPDATE_CATEGORY')")
     public ResponseEntity<?> updateCategory(
             @PathVariable UUID categoryId,
             @RequestBody @Valid UpdateCategoryRequest updateCategoryRequest) {
@@ -77,7 +75,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("{categoryId}")
-
+    @PreAuthorize("hasAuthority('PRIVILEGE_DELETE_CATEGORY')")
     public ResponseEntity<?> deleteCategory(
             @PathVariable UUID categoryId) {
         categoryService.deleteCategory(categoryId);
