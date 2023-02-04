@@ -1,0 +1,303 @@
+/* Reset CSS */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100%;
+    width: 100%;
+}
+
+:root {
+    --main-background: #FFC1CC;
+    --form-background: #F3B6B9;
+    --table-color: #E3A5B0;
+    --brown-text-color: #6B402D;
+    --gray-color: #D9D9D9;
+    --footer-color: #D598A3;
+}
+
+/* Begin: Button */
+.pink-btn {
+    background-color: #F37289;
+    color: #6B402D;
+}
+
+.red-btn {
+    background-color: #DE3163;
+    color: black;
+}
+
+.blue-btn {
+    background-color: #89CFF0;
+    color: black;
+}
+
+.yellow-btn {
+    background-color: #FFD580;
+    color: black;
+}
+
+.green-btn {
+    background-color: #90EE90;
+    color: black;
+}
+
+.orange-btn {
+    background-color: #E97451;
+    color: black;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.btn:hover {
+    opacity: 0.4;
+}
+/* End: Button */
+
+/* Begin: Text */
+.brown-text {
+    color: #6B402D;
+}
+
+.green-text {
+    color: #50C878;
+}
+
+.blue-text {
+    color: #00FFFF;
+}
+/* End: Text */
+
+/* Begin: Input */
+.gray-input {
+    background-color: #D9D9D9;
+    color: black;
+}
+
+.white-input {
+    background-color: white;
+    color: black;
+}
+/* End: Input */
+
+/* Begin: Table */
+.row {
+    margin-left: 24px;
+    margin-right: 24px;
+}
+
+.col {
+    float: left;
+}
+
+.col::after {
+    clear: both;
+}
+
+.col-1 {
+    width: 100%;
+}
+
+.col-2 {
+    width: 50%;
+}
+
+.col-3 {
+    width: 33.3333%;
+}
+
+.col-6 {
+    width: 16.6666%;
+}
+/* End: Table */
+
+.pull-right {
+    float: right;
+}
+
+.footer-class {
+    background-color: #D598A3;
+}
+
+.clear {
+    clear: both;
+}
+
+/* ------------------------------ */
+
+body {
+    height: 100%;
+    width: 100%;
+}
+
+#main {
+    height: 100%;
+    width: 100%;
+}
+
+/* Begin: Heading */
+.heading {
+    position: relative;
+    height: 10%;
+    width: 100%;
+    background-color: var(--footer-color);
+    font-size: 40px;
+}
+
+.heading p {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+}
+/* End: Heading */
+
+/* Begin: Conntent */
+.content {
+    display: grid;
+    height: 90%;
+    width: 100%;
+    background-color: var(--main-background);
+    padding: 15px;
+    grid-template-columns: 15% 45% 40%;
+    font-size: 30px;
+}
+
+.money-btn-list {
+    display: grid;
+    height: fit-content;
+    width: 90%;
+    grid-template-columns: 1;
+    gap: 15px;
+    text-align: center;
+}
+
+.money-btn {
+    background-color: var(--table-color);
+    border-radius: 0.6rem;
+    padding: 20px 0;
+    border: none;
+    font-size: 30px;
+}
+
+.pay-info {
+    background-color: var(--form-background);
+    display: grid;
+    height: 95%;
+    width: 100%;
+    grid-template-rows: 10% 75% 15%;
+    border-radius: 0.8rem;
+}
+
+.pay-heading {
+    height: fit-content;
+    width: 90%;
+    margin: auto;
+    padding: 15px 0;
+    text-align: center;
+    border-radius: 0.7rem;
+    text-decoration: none;
+}
+
+.pay-money {
+    display: grid;
+    height: 90%;
+    width: 90%;
+    grid-template-columns: auto auto;
+    margin: auto;
+}
+
+.total-num,
+.receive-num,
+.pay-back-num {
+    margin: auto 0;
+    margin-right: 30%;
+    margin-left: 20%;
+    font-size: 30px;
+    text-align: center;
+    padding: 20px 0;
+    border: none;
+    border-radius: 0.7rem;
+}
+
+.total-num,
+.pay-back-num {
+    background-color: var(--gray-color);
+}
+
+.total-txt,
+.receive-txt,
+.pay-back-txt {
+    margin: auto 0;
+    margin-left: 10%;
+}
+
+.pay-customer {
+    display: grid;
+    height: 90%;
+    width: 90%;
+    margin: auto;
+    grid-template-columns: 20% 80%;
+    padding-bottom: 20px;
+}
+
+.customer-txt {
+    margin: auto 0;
+    margin-left: 30%;
+}
+
+.customer-code {
+    width: 80%;
+    height: 50%;
+    margin: auto;
+    border: none;
+    border-radius: 0.7rem;
+    font-size: 24px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.btn-list {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+
+.qr-area,
+.confirm-btn,
+.cancel-btn {
+    display: block;
+    width: 90%;
+    margin: 0 auto;
+    text-decoration: none;
+    border-radius: 0.8rem;
+}
+
+.qr-area {
+    height: 65%;
+    padding: 10% 0;
+    margin-bottom: 5%;
+    font-size: 36px;
+}
+
+.qr {
+    margin-top: 5%;
+}
+
+.confirm-btn {
+    padding: 30px 0;
+    margin-bottom: 20px;
+}
+
+.cancel-btn {
+    padding: 30px 0;
+
+}
+/* End: Content */

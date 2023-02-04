@@ -1,0 +1,121 @@
+/* Reset CSS */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100%;
+    width: 100%;
+}
+
+:root {
+    --pink-background: #FFC1CC;
+    --red-pink-background: #F37289;
+    --blue-txt: #00FFFF;
+    --foot-background: #D598A3;
+    --brown-txt: #6B402D;
+}
+
+/* --------------------------------------- */
+
+body {
+    height: 100%;
+    width: 100%;
+}
+
+#main {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 93% 7%;
+}
+
+/* Begin: Content */
+.content {
+    height: 100%;
+    width: 100%;
+    background-color: var(--pink-background);
+    display: grid;
+    grid-template-columns: 50% 50%;
+    padding: 0 20%;
+}
+
+.logo {
+    width: 100%;
+    margin: auto;
+}
+
+.content-right {
+    width: 100%;
+    height: fit-content;
+    margin: auto;
+    text-align: center;
+}
+
+.slogan {
+    font-size: 60px;
+    color: var(--brown-txt);
+    font-style: italic;
+    font-weight: lighter;
+}
+
+.join-btn {
+    font-size:48px;
+    width: 80%;
+    padding: 3% 0;
+    margin-top: 2%;
+    background-color: var(--red-pink-background);
+    border: none;
+    border-radius: 0.8rem;
+    color: var(--brown-txt);
+}
+
+.join-btn:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}
+/* End: Content */
+
+/* Begin: Footing */
+.footing {
+    height: 100%;
+    width: 100%;
+    background-color: var(--foot-background);
+    display: grid;
+    grid-template-columns: 15% 15% 50% 10% 10%;
+}
+
+.about-us,
+.contact {
+    font-size: 24px;
+    color: #00FFFF;
+    text-align: center;
+    margin: auto;
+}
+
+.about-us:hover,
+.contact:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.fb-icon {
+    height: 100%;
+    margin: auto 0;
+    margin-left: 50%;
+}
+
+.insta-icon {
+    height: 80%;
+    margin: auto 0;
+}
+
+.fb-icon:hover,
+.insta-icon:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}
+/* End: Footing */

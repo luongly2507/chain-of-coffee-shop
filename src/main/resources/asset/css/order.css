@@ -1,0 +1,382 @@
+/* Reset CSS */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* Common */
+html {
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100%;
+    width: 100%;
+}
+
+:root {
+    --main-background: #FFC1CC;
+    --form-background: #F3B6B9;
+    --table-color: #E3A5B0;
+    --brown-text-color: #6B402D;
+    --gray-color: #D9D9D9;
+}
+
+/* Begin: Button */
+.pink-btn {
+    background-color: #F37289;
+    color: #6B402D;
+}
+
+.red-btn {
+    background-color: #DE3163;
+    color: black;
+}
+
+.blue-btn {
+    background-color: #89CFF0;
+    color: black;
+}
+
+.yellow-btn {
+    background-color: #FFD580;
+    color: black;
+}
+
+.green-btn {
+    background-color: #90EE90;
+    color: black;
+}
+
+.orange-btn {
+    background-color: #E97451;
+    color: black;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.btn:hover {
+    opacity: 0.4;
+}
+/* End: Button */
+
+/* Begin: Text */
+.brown-text {
+    color: #6B402D;
+}
+
+.green-text {
+    color: #50C878;
+}
+
+.blue-text {
+    color: #00FFFF;
+}
+
+.txt-20 {
+    font-size: 20px;
+}
+/* End: Text */
+
+/* Begin: Input */
+.gray-input {
+    background-color: #D9D9D9;
+    color: black;
+}
+
+.white-input {
+    background-color: white;
+    color: black;
+}
+/* End: Input */
+
+.pull-right {
+    float: right;
+}
+
+.footer-class {
+    background-color: #D598A3;
+}
+
+.clear {
+    clear: both;
+}
+
+/* ------------------------------ */
+
+body {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 15% 40% 45%;
+}
+
+/* Begin: Content left */
+.content-left {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    padding: 5% 0;
+    margin: auto;
+    grid-template-rows: 14% 40% 14% 14% 14%;
+    gap: 1%;
+    background-color: var(--main-background);
+}
+
+.cancel-btn,
+.merge-btn,
+.pay-btn,
+.close-btn {
+    font-size: 28px;
+    width: 80%;
+    padding: 5% 0;
+    margin: auto;
+    border: none;
+    border-radius: 0.8rem;
+}
+
+.logo {
+    width: 100%;
+    margin: auto;
+}
+
+.cancel-img,
+.merge-img,
+.pay-img,
+.close-img {
+    height: 15%;
+}
+/* End: Content left */
+
+/* Begin: Content middle */
+.content-middle {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-rows: 10% 65% 25%;
+    background-color: var(--form-background);
+}
+
+.bill-heading {
+    border-bottom: 1px solid var(--brown-text-color);
+    display: grid;
+    width: 100%;
+    height: 100%;
+    padding: 0 5%;
+    grid-auto-rows: 50% 50%;
+    text-transform: uppercase;
+    font-size: 24px;
+}
+
+.bill-date {
+    height: fit-content;
+    margin: auto 0;
+}
+
+.bill-info {
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: 50% 50%;
+    height: fit-content;
+    margin: auto 0;
+}
+
+.tbl-num {
+
+}
+
+.bill-num {
+    text-align: right;
+}
+
+.bill-content {
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: 100%;
+    padding: 5% 5%;
+    overflow: auto;
+}
+
+.bill-item {
+    display: grid;
+    height: 25%;
+    width: 100%;
+    margin: 2.5% auto;
+    grid-template-columns: 40% 30% 30%;
+}
+
+.bill-item-info {
+    display: grid;
+    height: 100%;
+    width: fit-content;
+    margin: auto;
+    grid-template-rows: 50% 50%;
+}
+
+.bill-item-name {
+
+}
+
+.bill-item-count {
+
+}
+
+.bill-item-value {
+
+}
+
+.bill-value {
+    border-top: 1px solid var(--brown-text-color);
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-template-rows: 33.3333% 33.3333% 33.3333%;
+    font-size: 24px;
+}
+
+.prepaid-value,
+.discount-value,
+.total-value {
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: 50% 50%;
+    text-transform: uppercase;
+}
+
+.prepaid-value {
+
+}
+
+.discount-value {
+    
+}
+
+.discount-num {
+    height: fit-content;
+    width: 100%;
+    margin: auto 10%;
+}
+
+#js-discount-num {
+    background-color: var(--gray-color);
+    height: 100%;
+    padding: 1% 32%;
+    border-radius: 0.8rem;
+}
+
+.total-value {
+
+}
+
+.prepaid-txt,
+.discount-txt,
+.total-txt {
+    height: fit-content;
+    width: fit-content;
+    margin: auto 0;
+    margin-left: 20%;
+}
+
+.prepaid-num,
+.total-num {
+    background-color: var(--gray-color);
+    height: fit-content;
+    width: 80%;
+    padding: 1% 0;
+    text-align: center;
+    margin: auto 10%;
+    border-radius: 0.8rem;
+}
+/* End: Content middle */
+
+/* Begin: Content right */
+.content-right {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-rows: 85% 15%;
+    background-color: var(--main-background);
+}
+
+.menu {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 30% 70%;
+    border-bottom: 1px solid var(--brown-text-color);
+}
+
+.category-list {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 100%;
+    padding: 5% 0;
+    overflow: auto;
+    border-right: 1px solid var(--brown-text-color);
+}
+
+.category-item {
+    text-transform: uppercase;
+    margin: 5% 10%;
+    font-size: 24px;
+    border: none;
+    border-radius: 0.8rem;
+    background-color: var(--table-color);
+}
+
+.drink-list {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    padding: 5% 5%;
+    grid-template-columns: 45% 45%;
+    gap: 10%;
+    overflow: auto;
+}
+
+.drink-item {
+
+}
+
+.discount-code {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 15% 59% 20%;
+    gap: 3%;
+    text-transform: uppercase;
+    font-size: 24px;
+}
+
+.discount-code-txt {
+    height: fit-content;
+    width: fit-content;
+    margin: auto;
+}
+
+.discount-code-select {
+    height: fit-content;
+    font-size: 24px;
+    padding: 1% 0;
+    text-align: center;
+    margin: auto 0;
+    border: none;
+    border-radius: 0.4rem;
+}
+
+.discount-btn {
+    border: none;
+    height: 80%;
+    width: 90%;
+    margin: auto;
+    font-size: 26px;
+}
+
+.discount-img {
+    height: 40%;
+}
+/* Begin: Content right */

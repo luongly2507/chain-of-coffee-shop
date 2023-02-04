@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/pay_cash.css">
+</head>
+
+<body onload="loadBillDetail()">
+    <div id="main">
+        <div class="heading">
+            <p>Xác nhận thanh toán</p>
+        </div>
+
+        <div class="content">
+            <div class="money-btn-list">
+                <button class="money-btn btn">1000</button>
+                <button class="money-btn btn">2000</button>
+                <button class="money-btn btn">5000</button>
+                <button class="money-btn btn">10000</button>
+                <button class="money-btn btn">20000</button>
+                <button class="money-btn btn">50000</button>
+                <button class="money-btn btn">100000</button>
+                <button class="money-btn btn">200000</button>
+                <button class="money-btn btn">500000</button>
+            </div>
+
+            <div class="pay-info">
+                <a href="../html/pay_momo.html" class="yellow-btn pay-heading btn">Thanh toán tiền mặt</a>
+                <div class="pay-money">
+                    <p class="total-txt">Tổng cộng</p>
+                    <p class="total-num">0</p>
+                    <p class="receive-txt">Khách đưa</p>
+                    <p class="receive-num">0</p>
+                    <p class="pay-back-txt">Tiền thừa</p>
+                    <p class="pay-back-num">0</p>
+                </div>
+                <div class="pay-customer">
+                    <p class="customer-txt">Mã KH</p>
+                    <input type="text" name="" id="" class="customer-code">
+                </div>
+            </div>
+
+            <div class="btn-list">
+                <img src="../img/logo.png" alt="" class="logo">
+                <a href="../html/home.html" class="confirm-btn green-btn btn disable">Xác nhận</a>
+                <a href="../html/order.html" class="cancel-btn red-btn btn">Hủy bỏ</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    document.querySelector('.total-num').innerHTML = localStorage.getItem('total-value');
+
+    // Begin: Change value received //
+    const moneyBtns = document.querySelectorAll('.money-btn')
+
+    for (const moneyBtn of moneyBtns) {
+        moneyBtn.addEventListener('click', function() {
+            document.querySelector('.receive-num').innerHTML = parseInt(document.querySelector('.receive-num').innerHTML) + parseInt(moneyBtn.innerHTML);
+            document.querySelector('.pay-back-num').innerHTML = parseInt(document.querySelector('.receive-num').innerHTML) - parseInt(document.querySelector('.total-num').innerHTML);
+            
+            if (parseInt(document.querySelector('.receive-num').innerHTML) >= parseInt(document.querySelector('.total-num').innerHTML)) {
+                document.querySelector('.confirm-btn').classList.remove('disable');
+            }
+        })
+    }
+    // End: Change  value rceived //
+
+    document.querySelector('.confirm-btn').addEventListener('action' ,function() {
+        localStorage.clear;
+    })
+</script>
+
+</html>
