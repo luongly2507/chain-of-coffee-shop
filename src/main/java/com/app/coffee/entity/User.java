@@ -15,11 +15,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
  
 @Data
 @AllArgsConstructor
@@ -65,4 +67,9 @@ public class User extends Auditable<String>{
           name = "role_id", referencedColumnName = "id")) 
     private Collection<Role> roles;
                   
+    @ManyToOne
+    @JoinColumn(name = "branch_id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Branch branch;
 }

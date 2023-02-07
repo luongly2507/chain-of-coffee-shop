@@ -46,4 +46,9 @@ public class Branch extends Auditable<String>{
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Collection<Tag> tags;
+
+    @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Collection<User> users;
 }

@@ -5,24 +5,23 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.app.coffee.payload.response.UserResponse;
 import com.app.coffee.service.AuthService;
 
 @Controller
-public class ApplicationController {
+@RequestMapping("/admin")
+public class AdminController {
+
     @Autowired
     AuthService authService; 
 
-    @GetMapping("/admin")
-    public String adminPage(Model model){
+    
+    @GetMapping("/employees")
+    public String getListEmployeesPage (Model model ){
         UserResponse userResponse = authService.getInformationUserFromEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         model.addAttribute("user", userResponse);
-        return "admin";
-    }
-
-    @GetMapping("/login")
-    public String loginPage(){
-        return "login";
+        return "list-employees";
     }
 }

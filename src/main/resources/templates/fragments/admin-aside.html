@@ -1,0 +1,39 @@
+<aside class="bg-dark col-2 p-5">
+  <div class="dropdown">
+    <a
+      class="dropdown-toggle pb-3"
+      href="#"
+      role="button"
+      id="dropdownMenuAvatarLink"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      <img
+        th:if="${user.gender == 'Nữ'}"
+        class="rounded-circle"
+        th:src="@{/img/icon/avatar-female.jpg}"
+        alt="Avatar"
+        width="60px"
+      />
+      <img
+        th:if="${user.gender != 'Nữ'}"
+        th:src="@{/img/icon/avatar-male.jpg}"
+        class="rounded-circle"
+        alt="Avatar"
+        width="60px"
+      />
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuAvatarLink">
+      <li><a class="dropdown-item" href="#">Profile</a></li>
+      <li><a class="dropdown-item" href="/logout">Logout</a></li>
+    </ul>
+  </div>
+  <div class="mt-5">
+    <ul class="aside-menu">
+      <li><a href="/admin/employees">Nhân viên</a></li>
+      <li><a href="">Sản phẩm</a></li>
+      <li><a href="">Thể loại</a></li>
+      <li><a href="">Bàn</a></li>
+    </ul>
+  </div>
+</aside>

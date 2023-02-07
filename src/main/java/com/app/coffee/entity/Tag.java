@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.app.coffee.audit.Auditable;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +28,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper=false)
 @Entity(name="tag")
-public class Tag {
+public class Tag  extends Auditable<String>{
     @Id
     @Column(nullable = false, updatable = false)
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")

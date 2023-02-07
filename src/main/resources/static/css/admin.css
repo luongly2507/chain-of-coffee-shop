@@ -1,0 +1,31 @@
+html,body, aside, main {
+    height: 100%;
+}
+body {
+    width: 100%;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+aside {
+    margin-top: 45px;
+   
+}
+.aside-menu {
+    list-style: none;
+    font-weight: bold;
+    padding-left: 0px;
+    margin-left: 0px;
+}
+.aside-menu li {
+    margin-top: 15px;
+    padding: 10px;
+}
+.aside-menu li a{
+   color: white;
+   padding: 10px;
+}
+.aside-menu li:hover{
+    background-color: burlywood;
+ }
