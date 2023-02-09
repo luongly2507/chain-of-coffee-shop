@@ -1,39 +1,84 @@
-<aside class="bg-dark col-2 p-5">
-  <div class="dropdown">
-    <a
-      class="dropdown-toggle pb-3"
-      href="#"
-      role="button"
-      id="dropdownMenuAvatarLink"
-      data-bs-toggle="dropdown"
-      aria-expanded="false"
-    >
-      <img
-        th:if="${user.gender == 'Nữ'}"
-        class="rounded-circle"
-        th:src="@{/img/icon/avatar-female.jpg}"
-        alt="Avatar"
-        width="60px"
-      />
-      <img
-        th:if="${user.gender != 'Nữ'}"
-        th:src="@{/img/icon/avatar-male.jpg}"
-        class="rounded-circle"
-        alt="Avatar"
-        width="60px"
-      />
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4" th:fragment="aside(site)">
+    <!-- Brand Logo -->
+    <a href="" class="brand-link">
+        <img th:src="@{/img/favicon.png}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+            style="opacity: .8">
+        <span class="brand-text font-weight-light">Coffee Store</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenuAvatarLink">
-      <li><a class="dropdown-item" href="#">Profile</a></li>
-      <li><a class="dropdown-item" href="/logout">Logout</a></li>
-    </ul>
-  </div>
-  <div class="mt-5">
-    <ul class="aside-menu">
-      <li><a href="/admin/employees">Nhân viên</a></li>
-      <li><a href="">Sản phẩm</a></li>
-      <li><a href="">Thể loại</a></li>
-      <li><a href="">Bàn</a></li>
-    </ul>
-  </div>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img th:src="@{/img/icon/admin.jpg}" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block" sec:authentication="name"></a>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+                <li class="nav-item ">
+                    <a href="/admin" class="nav-link" th:classappend="${site} == 'dashboard' ? 'active' : ''">
+                        <i class="nav-icon fas fa-tachometer-alt" ></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/employees" class="nav-link" th:classappend="${site} == 'employees' ? 'active' : ''">
+                        <i class="nav-icon fa-solid fa-clipboard-user"></i>  
+                        <p>Nhân viên</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/products" class="nav-link" th:classappend="${site} == 'products' ? 'active' : ''">
+                        <i class="nav-icon fa-brands fa-product-hunt"></i>    
+                        <p>Sản phẩm </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/orders" class="nav-link"  th:classappend="${site} == 'orders' ? 'active' : ''">
+                        <i class="nav-icon fa-solid fa-money-bill"></i>
+                        <p>Hóa đơn</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/ingredients" class="nav-link"  th:classappend="${site} == 'ingredients' ? 'active' : ''">
+                        <i class="nav-icon far fa-image"></i>
+                        <p>Nguyên liệu</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/suppliers" class="nav-link"  th:classappend="${site} == 'suppliers' ? 'active' : ''">
+                        <i class="nav-icon fa-solid fa-truck-field-un"></i>
+                        <p>Nhà cung cấp</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/admin/categories" class="nav-link"  th:classappend="${site} == 'categories' ? 'active' : ''">
+                        <i class="nav-icon fas fa-table"></i>
+                            <p>Thể loại</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/tags" class="nav-link"  th:classappend="${site} == 'tags' ? 'active' : ''">
+                        <i class="nav-icon fa-solid fa-tag"></i>
+                        <p>Thẻ</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/logout" class="nav-link"  th:classappend="${site} == 'tags' ? 'active' : ''">
+                        <i class="nav-icon fa-solid fa-right-from-bracket"></i>
+                        <p>Đăng xuất</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </aside>

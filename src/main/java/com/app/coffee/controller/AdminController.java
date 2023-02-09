@@ -17,11 +17,61 @@ public class AdminController {
     @Autowired
     AuthService authService; 
 
+   @GetMapping()
+    public String adminPage(Model model){
+        UserResponse userResponse = authService.getInformationUserFromEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("title","Admin | Dashboard"); 
+        model.addAttribute("user", userResponse);
+        return "admin";
+    }
     
     @GetMapping("/employees")
-    public String getListEmployeesPage (Model model ){
+    public String getEmployeesPage (Model model ){
         UserResponse userResponse = authService.getInformationUserFromEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("title","Admin | Employees Management"); 
         model.addAttribute("user", userResponse);
-        return "list-employees";
+        return "admin-employees";
+    }
+    @GetMapping("/products")
+    public String getProductsPage (Model model ){
+        UserResponse userResponse = authService.getInformationUserFromEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("title","Admin | Products Management"); 
+        model.addAttribute("user", userResponse);
+        return "admin-products";
+    }
+    @GetMapping("/orders")
+    public String getOrdersPage (Model model ){
+        UserResponse userResponse = authService.getInformationUserFromEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("title","Admin | Orders Management"); 
+        model.addAttribute("user", userResponse);
+        return "admin-orders";
+    }
+    @GetMapping("/ingredients")
+    public String getIngredientsPage (Model model ){
+        UserResponse userResponse = authService.getInformationUserFromEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("title","Admin | Ingredients Management"); 
+        model.addAttribute("user", userResponse);
+        return "admin-ingredients";
+    }
+    @GetMapping("/suppliers")
+    public String getSuppliersPage (Model model ){
+        UserResponse userResponse = authService.getInformationUserFromEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("title","Admin | Suppliers Management"); 
+        model.addAttribute("user", userResponse);
+        return "admin-suppliers";
+    }
+    @GetMapping("/categories")
+    public String getCategoriesPage (Model model ){
+        UserResponse userResponse = authService.getInformationUserFromEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("title","Admin | Categories Management"); 
+        model.addAttribute("user", userResponse);
+        return "admin-categories";
+    }
+    @GetMapping("/tags")
+    public String getTagsPage (Model model ){
+        UserResponse userResponse = authService.getInformationUserFromEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("title","Admin | Tags Management"); 
+        model.addAttribute("user", userResponse);
+        return "admin-tags";
     }
 }

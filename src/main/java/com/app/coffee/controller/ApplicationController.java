@@ -11,15 +11,7 @@ import com.app.coffee.service.AuthService;
 
 @Controller
 public class ApplicationController {
-    @Autowired
-    AuthService authService; 
-
-    @GetMapping("/admin")
-    public String adminPage(Model model){
-        UserResponse userResponse = authService.getInformationUserFromEmail(SecurityContextHolder.getContext().getAuthentication().getName());
-        model.addAttribute("user", userResponse);
-        return "admin";
-    }
+  
 
     @GetMapping("/login")
     public String loginPage(){
