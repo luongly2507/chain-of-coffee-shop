@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head th:replace="fragments/head.html :: head(${title})"></head>
+
 <body class="hold-transition sidebar-mini layout-fixed">
   <div class="wrapper">
     <!-- Navbar -->
@@ -8,8 +10,20 @@
     <!--Aside-->
     <aside th:replace="fragments/admin-aside.html :: aside('dashboard')"></aside>
     <!--Main-->
-    <main class="col"></main>
+    <!--Main-->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div th:replace="fragments/content-header.html :: contentHeader('Dashboard','')"></div>
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+         
+          </table>
+        </div>
+      </section>
+    </div>
   </div>
   <script th:replace="@{/fragments/script.html}"></script>
 </body>
+
 </html>

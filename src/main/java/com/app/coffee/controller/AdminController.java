@@ -1,6 +1,7 @@
 package com.app.coffee.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +13,7 @@ import com.app.coffee.service.AuthService;
 
 @Controller
 @RequestMapping("/admin")
+@PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
 public class AdminController {
 
     @Autowired
@@ -25,13 +27,7 @@ public class AdminController {
         return "admin";
     }
     
-    @GetMapping("/employees")
-    public String getEmployeesPage (Model model ){
-        UserResponse userResponse = authService.getInformationUserFromEmail(SecurityContextHolder.getContext().getAuthentication().getName());
-        model.addAttribute("title","Admin | Employees Management"); 
-        model.addAttribute("user", userResponse);
-        return "admin-employees";
-    }
+   
     @GetMapping("/products")
     public String getProductsPage (Model model ){
         UserResponse userResponse = authService.getInformationUserFromEmail(SecurityContextHolder.getContext().getAuthentication().getName());

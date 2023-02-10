@@ -1,15 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="fragments/head.html :: head(${title})"></head>
+
+<head th:replace="~{fragments/head.html :: head(${title})}"></head>
+
 <body class="hold-transition sidebar-mini layout-fixed">
-  <div class="wrapper">
-    <!-- Navbar -->
-    <nav th:replace="@{/fragments/admin-nav.html}"></nav>
-    <!--Aside-->
-    <aside th:replace="fragments/admin-aside.html :: aside('employees')"></aside>
-    <!--Main-->
-    <main class="col"></main>
-  </div>
-  <script th:replace="@{/fragments/script.html}"></script>
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav th:replace="~{fragments/admin-nav.html}"></nav>
+        <!--Aside-->
+        <aside th:replace="~{fragments/admin-aside.html :: aside('employees')}"></aside>
+        <!--Main-->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div th:replace="~{fragments/content-header.html :: contentHeader('Employees','Employees')}"></div>
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="d-flex justify-content-between">
+                        <a class="btn btn-success" href="/admin/employees/add">Thêm nhân viên</a>
+
+                        <input type="text" placeholder="Tìm kiếm ... " class="form-control w-25">
+                    </div>
+                    <div class="table-responsive-sm">
+                        <table class="table ">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Tên</th>
+                                    <th>Email</th>
+                                    <th>SĐT</th>
+                                    <th>Giới tính</th>
+                                    <th>Năm sinh</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Chức vụ</th>
+                                    <th>Chi nhánh</th>
+                                    <th>Xử lý</th>
+                                </tr>
+                                <tr th:if="${listUsers.size() ==0}">
+                                    <td colspan="10">Không có dữ liệu</td>
+                                </tr>
+                                <tr th:unless="${listUsers.size() ==0}" th:each="userItem : ${listUsers}">
+                                    <td th:utext="*{userItemStat.index}"></td>
+                                    <td th:utext="*{userItem.Name}"></td>
+                                    <td th:utext="*{userItem.Email}"></td>
+                                    <td th:utext="*{userItem.Telephone}"></td>
+                                    <td th:utext="*{userItem.Gender}"></td>
+                                    <td th:utext="*{userItem.Birthday}"></td>
+                                    <td th:utext="*{userItem.Address}"></td>
+                                    <td
+                                        th:utext="*{#strings.substring(#strings.toLowerCase(userItem.Roles),6,#strings.length(userItem.Roles)-1)}">
+                                    </td>
+                                    <td th:utext="*{userItem.Branches.name}"></td>
+                                    <td>
+                                        <button class="btn btn-info">Chỉnh sửa</button>
+                                        <button class="btn btn-danger">Xóa</button>
+                                    </td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <nav aria-label="Page navigation example" th:if = "${totalPages > 1}" >
+                       
+                        <ul class="pagination justify-content-end">
+                            <li class="page-item" th:classappend="${isFirst}? 'disabled' : ''">
+                                <a class="page-link" >First</a>
+                              </li>
+                            <li class="page-item" th:classappend="${hasPrevious}? '':'disabled'">
+                                <a class="page-link" th:href="@{/page/}">«</a>
+                            </li>
+                            <li class="page-item" th:if="${totalPages <= 5}" th:each="i: ${#numbers.sequence(1, totalPages)}" th:classappend="${currentPage == i}? 'disabled' : ''" >
+                                <a class="page-link" href="#">[[${i}]]</a>
+                            </li>
+                            <li class="page-item" th:if="${totalPages > 5 and currentPage < 4}" th:each="i: ${#numbers.sequence(1, 4)}" th:classappend="${currentPage == i}? 'disabled' : ''" >
+                                <a class="page-link" href="#">[[${i}]]</a>
+                            </li>
+                            <li class="page-item disabled" th:if="${totalPages > 5 and currentPage < 4}">
+                                <a class="page-link" href="#">...</a>
+                            </li>
+                            <li class="page-item disabled" th:if="${totalPages > 5 and currentPage > 3}" >
+                                <a class="page-link" href="#">...</a>
+                            </li>
+                            <li class="page-item" th:if="${totalPages > 5 and currentPage > 3}" >
+                                <a class="page-link" href="#">[[${i-1}]]</a>
+                            </li>
+                            <li class="page-item disabled" th:if="${totalPages > 5 and currentPage > 3}" >
+                                <a class="page-link" href="#">[[${i}]]</a>
+                            </li>
+                            <li class="page-item" th:if="${totalPages > 5 and currentPage > 3}" >
+                                <a class="page-link" href="#">[[${i+1}]]</a>
+                            </li>
+                            <li class="page-item disabled" th:if="${totalPages > 5 and currentPage > 3}" >
+                                <a class="page-link" href="#">...</a>
+                            </li>
+                            <li class="page-item" th:classappend="${hasNext}? '':'disabled'">
+                                <a class="page-link" href="#">»</a>
+                            </li>
+                            <li class="page-item" th:classappend="${isLast}? 'disabled' : ''">
+                                <a class="page-link" >Last</a>
+                              </li>
+                        </ul>
+                    </nav>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script th:replace="~{/fragments/script.html}"></script>
+    <script th:src="@{/js/admin-employees.js}"></script>
 </body>
+
 </html>

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SignUpRequest {
+public class CreateUserRequest {
  
     @NotBlank
     @Size(max = 50)

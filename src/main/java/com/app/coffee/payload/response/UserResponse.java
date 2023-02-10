@@ -2,7 +2,7 @@ package com.app.coffee.payload.response;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
@@ -22,7 +22,7 @@ public class UserResponse {
     private String address;
     private String email;
     private LocalDate birthday;
-    private Collection<String> roles;
+    private List<String> roles;
     private LocalDateTime lastModifiedAt;
     private String createdBy;
     private LocalDateTime createdAt;

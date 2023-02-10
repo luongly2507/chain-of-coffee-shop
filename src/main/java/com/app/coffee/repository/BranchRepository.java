@@ -19,4 +19,5 @@ public interface BranchRepository extends JpaRepository<Branch, UUID> {
     @Query(value = "SELECT * FROM Branch b WHERE LOWER(b.name) LIKE %:name%", 
     countQuery = "SELECT count(id) FROM Branch b WHERE LOWER(b.name) LIKE %:name%", nativeQuery = true)
     Page<Branch> findByName(@Param("name") String name, Pageable pageable);
+    
 }

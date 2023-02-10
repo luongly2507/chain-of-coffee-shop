@@ -10,8 +10,9 @@ import org.springframework.stereotype.Component;
 import com.app.coffee.entity.Role;
 import com.app.coffee.entity.User;
 import com.app.coffee.exception.ResourceNotFoundException;
+import com.app.coffee.mapper.BranchMapper;
 import com.app.coffee.mapper.UserMapper;
-import com.app.coffee.payload.request.SignUpRequest;
+import com.app.coffee.payload.request.CreateUserRequest;
 import com.app.coffee.payload.response.UserResponse;
 import com.app.coffee.repository.RoleRepository;
 
@@ -21,6 +22,8 @@ public class UserMapperImpl implements UserMapper{
     PasswordEncoder encoder;
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    BranchMapper branchMapper;
     @Override
     public UserResponse toUserResponse(User user) {
         if (user == null) {
@@ -38,13 +41,14 @@ public class UserMapperImpl implements UserMapper{
             .roles(user.getRoles().stream().map(r -> r.getName()).toList())
             .createdAt(user.getCreatedAt())
             .createdBy(user.getCreatedBy())
+            .branches(branchMapper.toBranchResponse(user.getBranch()))
             .lastModifiedAt(user.getLastModifiedAt())
             .lastModifiedBy(user.getLastModifiedBy())
             .build();
     }
 
     @Override
-    public User toUser(SignUpRequest signUpRequest) {
+    public User toUser(CreateUserRequest signUpRequest) {
         if (signUpRequest == null) {
             return null;
         }
