@@ -2,6 +2,7 @@ package com.app.coffee.entity;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Set;
 import java.util.UUID;
 
 import org.hibernate.annotations.GenericGenerator;

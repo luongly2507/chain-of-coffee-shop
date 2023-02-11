@@ -16,35 +16,35 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
-                    <form action="" class="w-50 m-auto">
+                    <form th:action="@{/admin/employees}" method="POST" th:object="${CreateUserRequest}" class="w-50 m-auto">
                         <h4 class="text-center"> Thêm nhân viên</h4>
                         <div class="row">
                             <div class="col">
                                 <label for="" class="form-text">Họ tên: </label>
-                                <input type="text" class="form-control" required>
+                                <input type="text" th:field="*{name}" class="form-control" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
                                 <label for="" class="form-text">Email: </label>
-                                <input type="text"  class="form-control" required>
+                                <input type="email" th:field="*{email}" class="form-control" required>
                             </div>
                             <div class="col">
                                 <label for="" class="form-text">Số điện thoại: </label>
-                                <input type="text"  class="form-control" required>
+                                <input type="tel" th:field="*{telephone}" class="form-control" required>
                             </div>
                         </div>
                      
                         <div class="row">
                             <div class="col">
                                 <label for="" class="form-text">Địa chỉ: </label>
-                                <input type="text"  class="form-control" required>
+                                <input type="text" th:field="*{address}" class="form-control" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
                                 <label for="" class="form-text">Giới tính: </label>
-                                <select name="" class="form-control" id="">
+                                <select th:field="*{gender}" class="form-control" id="">
                                     <option value="Nam">Nam</option>
                                     <option value="Nữ">Nữ</option>
                                     <option value="Khác">Khác</option>
@@ -53,15 +53,15 @@
                             </div>
                             <div class="col">
                                 <label for="" class="form-text">Ngày sinh: </label>
-                                <input type="date"  class="form-control" required>
+                                <input type="date"  th:field="*{birthday}" class="form-control" required>
                             </div>
                         </div>
                       
                         <div class="row">
                             <div class="col">
                                 <label for="" class="form-text">Chức vụ: </label>
-                                <select name="" class="form-control" id="">
-                                    <option sec:authorize="hasRole('ADMIN')" value="admin">Quản lý</option>
+                                <select th:field="*{role}" class="form-control" id="">
+                                    <option sec:authorize="hasRole('ADMIN')" value="manager">Quản lý</option>
                                     <option value="employee">Nhân viên</option>
                               </select>
                             </div>
@@ -69,7 +69,14 @@
                         <div class="row">
                             <div class="col">
                                 <label for="" class="form-text">Mật khẩu: </label>
-                                <input type="text"  class="form-control" required>
+                                <input type="password" th:field="*{password}" class="form-control" required>
+                            </div>
+                           
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                              
+                                <input type="test" th:value="${user.branches.id}"  th:field="*{branch}" class="form-control" hidden>
                             </div>
                         </div>
                           <div class="row">

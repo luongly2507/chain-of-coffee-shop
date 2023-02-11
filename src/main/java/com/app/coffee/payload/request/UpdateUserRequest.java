@@ -16,8 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CreateUserRequest {
- 
+public class UpdateUserRequest {
     @NotBlank
     @Size(max = 50)
     @Email
@@ -27,9 +26,7 @@ public class CreateUserRequest {
     private Set<String> role;
     private String telephone;
     private String address;
-    private UUID branch;
-    @NotBlank
-    @Size(min = 6, max = 40)
     private String password;
     private LocalDate birthday;
+        private UUID branch;
 }

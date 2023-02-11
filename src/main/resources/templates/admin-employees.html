@@ -17,9 +17,9 @@
             <section class="content">
                 <div class="container-fluid">
                     <div class="d-flex justify-content-between">
-                        <a class="btn btn-success" href="/admin/employees/add">Thêm nhân viên</a>
-
-                        <input type="text" placeholder="Tìm kiếm ... " class="form-control w-25">
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addStaticBackdrop">Thêm
+                            nhân viên</button>
+                        <input type="text" id="search-employee" placeholder="Tìm kiếm ... " class="form-control w-25">
                     </div>
                     <div class="table-responsive-sm">
                         <table class="table ">
@@ -36,72 +36,205 @@
                                     <th>Chi nhánh</th>
                                     <th>Xử lý</th>
                                 </tr>
-                                <tr th:if="${listUsers.size() ==0}">
-                                    <td colspan="10">Không có dữ liệu</td>
-                                </tr>
-                                <tr th:unless="${listUsers.size() ==0}" th:each="userItem : ${listUsers}">
-                                    <td th:utext="*{userItemStat.index}"></td>
-                                    <td th:utext="*{userItem.Name}"></td>
-                                    <td th:utext="*{userItem.Email}"></td>
-                                    <td th:utext="*{userItem.Telephone}"></td>
-                                    <td th:utext="*{userItem.Gender}"></td>
-                                    <td th:utext="*{userItem.Birthday}"></td>
-                                    <td th:utext="*{userItem.Address}"></td>
-                                    <td
-                                        th:utext="*{#strings.substring(#strings.toLowerCase(userItem.Roles),6,#strings.length(userItem.Roles)-1)}">
-                                    </td>
-                                    <td th:utext="*{userItem.Branches.name}"></td>
-                                    <td>
-                                        <button class="btn btn-info">Chỉnh sửa</button>
-                                        <button class="btn btn-danger">Xóa</button>
-                                    </td>
-                                </tr>
                             </thead>
+                            <tbody id="list-employees">
+                            </tbody>
                         </table>
+                        <nav id="pagination">
+                        </nav>
                     </div>
-                    <nav aria-label="Page navigation example" th:if = "${totalPages > 1}" >
-                       
-                        <ul class="pagination justify-content-end">
-                            <li class="page-item" th:classappend="${isFirst}? 'disabled' : ''">
-                                <a class="page-link" >First</a>
-                              </li>
-                            <li class="page-item" th:classappend="${hasPrevious}? '':'disabled'">
-                                <a class="page-link" th:href="@{/page/}">«</a>
-                            </li>
-                            <li class="page-item" th:if="${totalPages <= 5}" th:each="i: ${#numbers.sequence(1, totalPages)}" th:classappend="${currentPage == i}? 'disabled' : ''" >
-                                <a class="page-link" href="#">[[${i}]]</a>
-                            </li>
-                            <li class="page-item" th:if="${totalPages > 5 and currentPage < 4}" th:each="i: ${#numbers.sequence(1, 4)}" th:classappend="${currentPage == i}? 'disabled' : ''" >
-                                <a class="page-link" href="#">[[${i}]]</a>
-                            </li>
-                            <li class="page-item disabled" th:if="${totalPages > 5 and currentPage < 4}">
-                                <a class="page-link" href="#">...</a>
-                            </li>
-                            <li class="page-item disabled" th:if="${totalPages > 5 and currentPage > 3}" >
-                                <a class="page-link" href="#">...</a>
-                            </li>
-                            <li class="page-item" th:if="${totalPages > 5 and currentPage > 3}" >
-                                <a class="page-link" href="#">[[${i-1}]]</a>
-                            </li>
-                            <li class="page-item disabled" th:if="${totalPages > 5 and currentPage > 3}" >
-                                <a class="page-link" href="#">[[${i}]]</a>
-                            </li>
-                            <li class="page-item" th:if="${totalPages > 5 and currentPage > 3}" >
-                                <a class="page-link" href="#">[[${i+1}]]</a>
-                            </li>
-                            <li class="page-item disabled" th:if="${totalPages > 5 and currentPage > 3}" >
-                                <a class="page-link" href="#">...</a>
-                            </li>
-                            <li class="page-item" th:classappend="${hasNext}? '':'disabled'">
-                                <a class="page-link" href="#">»</a>
-                            </li>
-                            <li class="page-item" th:classappend="${isLast}? 'disabled' : ''">
-                                <a class="page-link" >Last</a>
-                              </li>
-                        </ul>
-                    </nav>
                 </div>
             </section>
+
+            <!-- Add Modal -->
+            <div class="modal fade" id="addStaticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="addStaticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form class="m-auto" id="add-form">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addStaticBackdropLabel" >Thêm nhân viên</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="">Họ tên: </label>
+                                        <input type="text" id="add-user-name" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="">Email: </label>
+                                        <input type="email"  id="add-user-email"  class="form-control" required>
+                                    </div>
+                                    <div class="col">
+                                        <label for="">Mật khẩu: </label>
+                                        <input type="password"  id="add-user-password"  minlength="6" class="form-control" required >
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="">Địa chỉ: </label>
+                                        <input type="text"  id="add-user-address"  class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="">Giới tính: </label>
+                                        <select class="form-control"  id="add-user-gender" required>
+                                            <option value="Nam">Nam</option>
+                                            <option value="Nữ">Nữ</option>
+                                            <option value="Khác">Khác</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label for="">Ngày sinh: </label>
+                                        <input type="date" class="form-control"  id="add-user-birthday" required>
+                                    </div>
+                                    <div class="col">
+                                        <label for="">Chức vụ: </label>
+                                        <select class="form-control"   id="add-user-role" required >
+                                            <option sec:authorize="hasRole('ADMIN')" value="manager">Quản lý</option>
+                                            <option value="employee">Nhân viên</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="">Số điện thoại: </label>
+                                        <input type="tel" id="add-user-telephone"  class="form-control" required>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="form-control" sec:authorize="hasRole('MANAGER')"  id="add-user-branch"  th:value="${user.branches.id}" required hidden>
+                                        <select class="form-control"  sec:authorize="hasRole('ADMIN')" id="add-user-branch" required >
+                                       
+                                            <option th:value="${branch.id}" th:utext="${branch.name}"  th:each="branch : ${branches}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col" id="add-alert">
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                <button type="submit" class="btn btn-success"  >Thêm nhân viên</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Update Modal -->
+            <div class="modal fade" id="updateStaticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="updateStaticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form class="m-auto" id="update-form">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="updateStaticBackdropLabel">Cập nhật thông tin nhân viên</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="">Họ tên: </label>
+                                        <input type="text" class="form-control" id="update-user-name" required>
+                                        <input type="text" value="" id="update-user-id" hidden>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="">Email: </label>
+                                        <input type="email" class="form-control"   id="update-user-email" required>
+                                    </div>
+                                    <div class="col">
+                                        <label for="">Đổi Mật khẩu: </label>
+                                        <input type="password" class="form-control" id="update-user-password" >
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="">Địa chỉ: </label>
+                                        <input type="text" class="form-control" id="update-user-address" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="">Giới tính: </label>
+                                        <select class="form-control" id="update-user-gender">
+                                            <option value="Nam">Nam</option>
+                                            <option value="Nữ">Nữ</option>
+                                            <option value="Khác">Khác</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <label for="">Ngày sinh: </label>
+                                        <input type="date" class="form-control" id="update-user-birthday" required>
+                                    </div>
+                                    <div class="col">
+                                        <label for="">Chức vụ: </label>
+                                        <select class="form-control" id="update-user-role">
+                                            <option sec:authorize="hasRole('ADMIN')" value="manager">Quản lý</option>
+                                            <option value="employee">Nhân viên</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="">Số điện thoại: </label>
+                                        <input type="tel" class="form-control" id="update-user-telephone" required>
+                                    </div>
+                                    <div class="col">
+                                        <label for="">Chi nhánh: </label>
+                                        <input type="text" class="form-control" sec:authorize="hasRole('MANAGER')" id="update-user-branch"  th:value="${user.branches.id}"  hidden>
+                                        <select class="form-control"  sec:authorize="hasRole('ADMIN')" id="update-user-branch" required >
+                                            <option th:value="${branch.id}" th:utext="${branch.name}"  th:each="branch : ${branches}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col" id="update-alert">
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                <button type="submit" class="btn btn-info" data-bs-dismiss="modal" >Cập nhật</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Delete Modal -->
+            <div class="modal fade" id="deleteStaticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="deleteStaticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form class="m-auto">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteStaticBackdropLabel">Xác nhận xóa nhân viên</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                               <label id="delete-modal-message"></label>
+                               <input type="text"  id="delete-employee-id" hidden>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="btn-delete">Xóa</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script th:replace="~{/fragments/script.html}"></script>

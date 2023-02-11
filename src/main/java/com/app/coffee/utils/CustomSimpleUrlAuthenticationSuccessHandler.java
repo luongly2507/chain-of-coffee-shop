@@ -54,7 +54,7 @@ public class CustomSimpleUrlAuthenticationSuccessHandler implements Authenticati
         Map<String, String> roleTargetUrlMap = new HashMap<>();
         roleTargetUrlMap.put("ROLE_EMPLOYEE", "/");
         roleTargetUrlMap.put("ROLE_ADMIN", "/admin");
-        roleTargetUrlMap.put("ROLE_MANAGER", "/manager");
+        roleTargetUrlMap.put("ROLE_MANAGER", "/admin");
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (final GrantedAuthority grantedAuthority : authorities) {
             String authorityName = grantedAuthority.getAuthority();

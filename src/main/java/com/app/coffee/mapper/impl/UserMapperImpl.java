@@ -13,7 +13,9 @@ import com.app.coffee.exception.ResourceNotFoundException;
 import com.app.coffee.mapper.BranchMapper;
 import com.app.coffee.mapper.UserMapper;
 import com.app.coffee.payload.request.CreateUserRequest;
+import com.app.coffee.payload.request.UpdateUserRequest;
 import com.app.coffee.payload.response.UserResponse;
+import com.app.coffee.repository.BranchRepository;
 import com.app.coffee.repository.RoleRepository;
 
 @Component
@@ -22,6 +24,8 @@ public class UserMapperImpl implements UserMapper{
     PasswordEncoder encoder;
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    BranchRepository branchRepository;
     @Autowired
     BranchMapper branchMapper;
     @Override
@@ -59,6 +63,7 @@ public class UserMapperImpl implements UserMapper{
                     .birthday(signUpRequest.getBirthday())
                     .telephone(signUpRequest.getTelephone())
                     .address(signUpRequest.getAddress())
+                    .branch(branchRepository.findById(signUpRequest.getBranch()).orElseThrow(()->new ResourceNotFoundException()))
                     .password(encoder.encode(signUpRequest.getPassword()))
                     .build();
         Set<String> strRoles = signUpRequest.getRole();
@@ -76,7 +81,7 @@ public class UserMapperImpl implements UserMapper{
                         roles.add(adminRole);
 
                         break;
-                    case "mod":
+                    case "manager":
                         Role modRole = roleRepository.findByName("ROLE_MANAGER")
                                 .orElseThrow(() -> new ResourceNotFoundException("Error: Role is not found."));
                         roles.add(modRole);
@@ -91,6 +96,36 @@ public class UserMapperImpl implements UserMapper{
         }
         user.setRoles(roles);
         return user;
+    }
+
+    @Override
+    public void updateUser(UpdateUserRequest updateUser, User user) {
+        if(updateUser.getPassword().length() >= 6){
+            user.setPassword(encoder.encode(updateUser.getPassword()));
+        }
+        user.setName(updateUser.getName());
+        user.setTelephone(updateUser.getTelephone());
+        user.setEmail(updateUser.getEmail());
+        user.setGender(updateUser.getGender());
+        user.setBirthday(updateUser.getBirthday());
+        user.setAddress(updateUser.getAddress());
+        Set<String> strRoles = updateUser.getRole();
+        Set<Role> roles = new HashSet<>();
+        strRoles.forEach(role -> {
+            switch (role) {
+                case "manager":
+                    Role modRole = roleRepository.findByName("ROLE_MANAGER")
+                            .orElseThrow(() -> new ResourceNotFoundException("Error: Role is not found."));
+                    roles.add(modRole);
+                    break;
+                default:
+                    Role userRole = roleRepository.findByName("ROLE_EMPLOYEE")
+                            .orElseThrow(() -> new ResourceNotFoundException("Error: Role is not found."));
+                    roles.add(userRole);
+            }
+        });
+        user.setRoles(roles);
+        user.setBranch(branchRepository.findById(updateUser.getBranch()).orElseThrow(()->new ResourceNotFoundException()));
     }
     
 }

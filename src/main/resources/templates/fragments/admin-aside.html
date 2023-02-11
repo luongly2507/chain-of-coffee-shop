@@ -15,6 +15,8 @@
             </div>
             <div class="info">
                 <a href="#" class="d-block" sec:authentication="name"></a>
+                <a href="" id="userRoles"  th:utext="*{#strings.substring(#strings.toLowerCase(user.Roles),6,#strings.length(user.Roles)-1)}" hidden></a>
+                <a href="" id="userBranches" th:utext="${user.branches.id}" hidden></a>
             </div>
         </div>
 
