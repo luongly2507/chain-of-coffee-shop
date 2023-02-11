@@ -15,7 +15,7 @@ import jakarta.validation.Valid;
 
 public interface ProductService {
     public List<ProductResponse> getAllProducts();
-    public Page<ProductResponse> getAllProducts(Pageable pageable);
+    public Page<ProductResponse> getAllProducts(String key, Pageable pageable);
     public ProductResponse getProductById(UUID productId);
     public void deleteProduct(UUID productId);
     public ProductResponse createProduct(MultipartFile image, @Valid CreateProductRequest createProductRequest);

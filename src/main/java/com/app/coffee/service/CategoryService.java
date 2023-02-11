@@ -15,7 +15,7 @@ import jakarta.validation.Valid;
 public interface CategoryService {
 
     public List<CategoryResponse> getAllCategories();
-    public Page<CategoryResponse> getAllCategories(Pageable pageable);
+    public Page<CategoryResponse> getAllCategories(String key,Pageable pageable);
     public CategoryResponse getCategoryById(UUID categoryId);
     public void deleteCategory(UUID categoryId);
     public CategoryResponse createCategory(@Valid CreateCategoryRequest createCategoryRequest);

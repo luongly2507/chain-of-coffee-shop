@@ -40,7 +40,8 @@
                             <tbody id="list-employees">
                             </tbody>
                         </table>
-                        <nav id="pagination">
+                        <nav>
+                            <ul id="pagination" class="pagination justify-content-end"></ul>
                         </nav>
                     </div>
                 </div>
@@ -108,6 +109,7 @@
                                         <input type="tel" id="add-user-telephone"  class="form-control" required>
                                     </div>
                                     <div class="col">
+                                        <label for="" sec:authorize="hasRole('ADMIN')">Chi nhánh: </label>
                                         <input type="text" class="form-control" sec:authorize="hasRole('MANAGER')"  id="add-user-branch"  th:value="${user.branches.id}" required hidden>
                                         <select class="form-control"  sec:authorize="hasRole('ADMIN')" id="add-user-branch" required >
                                        
@@ -192,7 +194,7 @@
                                         <input type="tel" class="form-control" id="update-user-telephone" required>
                                     </div>
                                     <div class="col">
-                                        <label for="">Chi nhánh: </label>
+                                        <label for="" sec:authorize="hasRole('ADMIN')">Chi nhánh: </label>
                                         <input type="text" class="form-control" sec:authorize="hasRole('MANAGER')" id="update-user-branch"  th:value="${user.branches.id}"  hidden>
                                         <select class="form-control"  sec:authorize="hasRole('ADMIN')" id="update-user-branch" required >
                                             <option th:value="${branch.id}" th:utext="${branch.name}"  th:each="branch : ${branches}"></option>

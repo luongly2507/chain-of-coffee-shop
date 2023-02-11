@@ -8,8 +8,159 @@
     <!--Aside-->
     <aside th:replace="fragments/admin-aside.html :: aside('products')"></aside>
     <!--Main-->
-    <main class="col"></main>
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div th:replace="~{fragments/content-header.html :: contentHeader('Products','Products')}"></div>
+      <!-- Main content -->
+      <section class="content">
+          <div class="container-fluid">
+              <div class="d-flex justify-content-between">
+                  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addStaticBackdrop">Thêm sản phẩm</button>
+                  <input type="text" id="search-product" placeholder="Tìm kiếm ... " class="form-control w-25">
+              </div>
+              <div class="table-responsive-sm">
+                  <table class="table ">
+                      <thead>
+                          <tr>
+                              <th>#</th>
+                              <th></th>
+                              <th >Tên</th>
+                              <th>Thể loại</th>
+                              <th>Giá</th>
+                              <th>Mô tả</th>
+                              <th class="text-center">Xử lý</th>
+                          </tr>
+                      </thead>
+                      <tbody id="list-products">
+                      </tbody>
+                  </table>
+                  <nav>
+                      <ul id="pagination" class="pagination justify-content-end"></ul>
+                  </nav>
+              </div>
+          </div>
+      </section>
+
+      <!-- Add Modal -->
+      <div class="modal fade" id="addStaticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+          tabindex="-1" aria-labelledby="addStaticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog ">
+              <div class="modal-content">
+                  <form class="m-auto w-100" enctype="multipart/form-data" id="add-form">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="addStaticBackdropLabel" >Thêm sản phẩm</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"
+                              aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                          <div class="row">
+                              <div class="col">
+                                  <label for="">Tên: </label>
+                                  <input type="text" id="add-product-name" name="name" class="form-control" required>
+                              </div>
+                              <div class="col">
+                                <label for="">Thể loại: </label>
+                                <select name="categoryID" id="" class="form-control">
+                                    <option th:value="${category.id}" th:utext="${category.name}" th:each="category : ${categories}"></option>
+                                </select>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <label for="">Giá: </label>
+                              <input type="number" id="add-product-price" name="price" class="form-control" required>
+                            </div>
+                          </div>
+                          <div class="row">
+                            
+                              <div class="col">
+                                  <label for="">Mô tả: </label>
+                                  <textarea  id="add-product-description" name="description" class="form-control" cols="30" rows="10"></textarea>
+                              </div>
+                          </div>
+                          <div class="row">
+                            <label for="">Hình ảnh: </label>
+                            <input type="file" name="image" class="form-control" required>
+                          </div>
+                          <div class="row">
+                              <div class="col" id="add-alert">
+                                 
+                              </div>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                          <button type="submit" class="btn btn-success">Thêm sản phẩm</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+      <!-- Update Modal -->
+      <div class="modal fade" id="updateStaticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+          tabindex="-1" aria-labelledby="updateStaticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                <form class="m-auto w-100" id="update-form">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="addStaticBackdropLabel" >Chỉnh sửa sản phẩm</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"
+                          aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="row">
+                          <div class="col">
+                              <label for="">Tên: </label>
+                              <input type="text" id="update-product-name" class="form-control" required>
+                              <input type="text" value="" id="update-product-id" hidden>
+
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col">
+                              <label for="">Mô tả: </label>
+                              <textarea name="" id="update-product-description"class="form-control" cols="30" rows="10"></textarea>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col" id="update-alert">
+                             
+                          </div>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                      <button type="submit" class="btn btn-info"  data-bs-dismiss="modal" >Cập nhật</button>
+                  </div>
+              </form>
+              </div>
+          </div>
+      </div>
+      <!-- Delete Modal -->
+      <div class="modal fade" id="deleteStaticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+          tabindex="-1" aria-labelledby="deleteStaticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <form class="m-auto">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="deleteStaticBackdropLabel">Xác nhận xóa sản phẩm</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                         <label id="delete-modal-message"></label>
+                         <input type="text"  id="delete-product-id" hidden>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="btn-delete">Xóa</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
   </div>
   <script th:replace="@{/fragments/script.html}"></script>
+  <script th:src="@{/js/admin-products.js}"></script>
 </body>
 </html>

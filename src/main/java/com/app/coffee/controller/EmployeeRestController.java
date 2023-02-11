@@ -33,9 +33,10 @@ public class EmployeeRestController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<?> getAllEmployee(@RequestParam List<String> roles, @RequestParam String branchId,
+    public ResponseEntity<?> getAllEmployee(@RequestParam(required = false) String key, @RequestParam List<String> roles, @RequestParam String branchId,
             Pageable pageable) {
-        return ResponseEntity.ok(userService.getAllUsers(roles, branchId, pageable));
+                System.out.println(key);
+        return ResponseEntity.ok(userService.getAllUsers(key, roles, branchId, pageable));
     }
     @GetMapping("/{employeeId}")
     public ResponseEntity<?> getEmployeeById(@PathVariable UUID employeeId) {

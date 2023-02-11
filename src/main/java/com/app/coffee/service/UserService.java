@@ -14,7 +14,7 @@ import jakarta.validation.Valid;
 
 public interface UserService {
     public List<UserResponse> getAllUsers();
-    public Page<UserResponse> getAllUsers(List<String> roles,String branch, Pageable pageable);
+    public Page<UserResponse> getAllUsers(String key, List<String> roles,String branch, Pageable pageable);
     public UserResponse getUserById(UUID userId);
     public void deleteUser(UUID userId);
     public UserResponse createUser(@Valid CreateUserRequest createUserRequest);

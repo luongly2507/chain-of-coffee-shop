@@ -48,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
 
     // Get Mapping - Get By Page
     @Override
-    public Page<ProductResponse> getAllProducts(Pageable pageable) {
+    public Page<ProductResponse> getAllProducts(String key, Pageable pageable) {
         return productRepository.findAll(pageable)
                 .map(product -> productMapper.toProductResponse(product));
     }

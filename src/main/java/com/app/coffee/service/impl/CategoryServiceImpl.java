@@ -42,9 +42,13 @@ public class CategoryServiceImpl implements CategoryService{
 
     // Get Mapping - Get By Page
     @Override
-    public Page<CategoryResponse> getAllCategories(Pageable pageable) {
-        return categoryRepository.findAll(pageable)
-        .map(category->categoryMapper.toCategoryResponse(category));
+    public Page<CategoryResponse> getAllCategories(String key, Pageable pageable) {
+        if (key != null) {
+            return getAllCategoriesByName(key, pageable);
+        } else {
+            return categoryRepository.findAll(pageable).map(category->categoryMapper.toCategoryResponse(category));
+
+        }
     }
 
     // Get Mapping - Get By Id
@@ -65,7 +69,7 @@ public class CategoryServiceImpl implements CategoryService{
         }
          // Check name is unique
         if (categoryRepository.existsByName(createCategoryRequest.getName())) {
-            throw new ConflictException("Already Name Exists.");
+            throw new ConflictException("Tên đã tồn tại.");
         }
         return categoryMapper.toCategoryResponse(categoryRepository.save(category));       
     }
@@ -79,7 +83,7 @@ public class CategoryServiceImpl implements CategoryService{
           // Check name is unique
           if (!updateCategoryRequest.getName().equals(category.getName())) { // compare request name and repository name
             if (categoryRepository.existsByName(updateCategoryRequest.getName())) {
-                throw new ConflictException("Already Name Exists.");
+                throw new ConflictException("Tên đã tồn tại.");
             }
         }
         categoryMapper.updateCategory(updateCategoryRequest, category);

@@ -41,12 +41,22 @@ public class UserServiceImpl implements UserService {
 
     // Get Mapping - Get By Page
     @Override
-    public Page<UserResponse> getAllUsers(List<String> roles, String branchId, Pageable pageable) {
-        System.out.println(roles);
+    public Page<UserResponse> getAllUsers(String key, List<String> roles, String branchId, Pageable pageable) {
         if(roles.contains("admin")) {
-            return userRepository.findAllByAdmin(pageable).map(user -> userMapper.toUserResponse(user));
+            if (key != null){
+                return userRepository.searchAllByAdmin(key,pageable).map(user -> userMapper.toUserResponse(user));
+            } else {
+                return userRepository.findAllByAdmin(pageable).map(user -> userMapper.toUserResponse(user));
+            }
+           
         }
-        return userRepository.findAllByManager(UUID.fromString(branchId),pageable).map(user -> userMapper.toUserResponse(user));
+        if (key != null){
+            return userRepository.searchAllByManager(key, UUID.fromString(branchId),pageable).map(user -> userMapper.toUserResponse(user));
+        }
+        else {
+            return userRepository.findAllByManager( UUID.fromString(branchId),pageable).map(user -> userMapper.toUserResponse(user));
+
+        }
     }
 
     // Get Mapping - Get By Id

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.app.coffee.payload.response.UserResponse;
 import com.app.coffee.service.AuthService;
+import com.app.coffee.service.BranchService;
+import com.app.coffee.service.CategoryService;
 
 @Controller
 @RequestMapping("/admin")
@@ -18,7 +20,11 @@ public class AdminController {
 
     @Autowired
     AuthService authService; 
-
+    @Autowired
+    BranchService branchService;
+    @Autowired
+    CategoryService categoryService;
+    
    @GetMapping()
     public String adminPage(Model model){
         UserResponse userResponse = authService.getInformationUserFromEmail(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -33,6 +39,7 @@ public class AdminController {
         UserResponse userResponse = authService.getInformationUserFromEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         model.addAttribute("title","Admin | Products Management"); 
         model.addAttribute("user", userResponse);
+        model.addAttribute("categories",categoryService.getAllCategories());
         return "admin-products";
     }
     @GetMapping("/orders")
@@ -69,5 +76,13 @@ public class AdminController {
         model.addAttribute("title","Admin | Tags Management"); 
         model.addAttribute("user", userResponse);
         return "admin-tags";
+    }
+    @GetMapping("/employees")
+    public String getEmployeesPage (Model model){
+        UserResponse userResponse = authService.getInformationUserFromEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("title","Admin | Employees Management"); 
+        model.addAttribute("user", userResponse);    
+        model.addAttribute("branches", branchService. getAllBranchs());    
+        return "admin-employees";
     }
 }

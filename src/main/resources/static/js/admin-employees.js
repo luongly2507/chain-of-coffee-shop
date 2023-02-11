@@ -1,10 +1,68 @@
 const employeeUrl = `http://localhost:8080/api/v1/employees`;
 let currentPage = 0;
-let pageSize = 10;
-
+let pageSize = 5;
+let totalPages;
+let search = '';
 // Get First Page
-getEmployeePaginated(currentPage, pageSize);
+getEmployeePaginated(currentPage, pageSize,search);
+function getEmployeePaginated(page, size, search) {
+    let url;
+    if (search == '') {
+        url = employeeUrl + `?branchId=${$('#userBranches').text()}&roles=${$('#userRoles').text()}&page=${page}&size=${size}&sort=last_modified_at,desc`;
+    } else {
+        url = employeeUrl + `?branchId=${$('#userBranches').text()}&roles=${$('#userRoles').text()}&page=${page}&size=${size}&sort=last_modified_at,desc&key=${search}`
+    }
+    // Call GET request
+    $.ajax({
+        url: url,
+        type: 'GET',
+        contentType: "application/json;charset=utf-16",
+        success: function (data, textStatus) {  // Success
+            totalPages = data.totalPages
+            currentPage = page
+            $('#list-employees').html('')
+            if (data.content.length == 0) {
+                $('#list-employees').html(`<tr><td>Không có dữ liệu</td></tr>`)
+            } else {
+                data.content.forEach((element, index) => {
+                    $('#list-employees').append(`
+                        <tr>
+                            <td>${index}</td>
+                            <td>${element.name}</td>
+                            <td>${element.email}</td>
+                            <td>${element.telephone}</td>
+                            <td>${element.gender}</td>
+                            <td>${element.birthday}</td>s
+                            <td>${element.address}</td>
+                            <td>${element.roles == 'ROLE_EMPLOYEE' ? 'Nhân viên' : 'Quản lý'}</td>
+                            <td>${element.branches.name}</td>
+                            <td>
+                                <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#updateStaticBackdrop" onclick="showUpdateModal('${element.id}')">Chỉnh sửa</button>
+                                <button  class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteStaticBackdrop" onclick="showDeleteModal('${element.id}','${element.email}')" >Xóa</button>
+                            </td>
+                        </tr>
+                    `)
+                });
+                $('#pagination').html('')
+                if (data.totalElements > data.size) {
+                   
+                    let pages = pagination(currentPage, data.totalPages);
+                    pages.forEach(element=>{
+                        if (currentPage + 1 == element){
+                            $('#pagination').append(`<li class="page-item disabled"><a class="page-link" href="#">${element}</a></li>`);
 
+                        } else {
+                            $('#pagination').append(`<li class="page-item"><a onclick="getEmployeePaginated(${element-1}, ${size}, '${search}')" class="page-link" href="#">${element}</a></li>`);
+                        }
+                    })
+                }
+            }
+        },
+        error: function (e) {
+            $('#list-employees').html(`<tr><td>Không có dữ liệu</td></tr>`)
+        }
+    });
+}
 // Create Employee
 $('#add-form').submit(function (e) {
     e.preventDefault();
@@ -27,7 +85,7 @@ $('#add-form').submit(function (e) {
             }
         ),
         success: function (data, textStatus) {  // Success
-            getEmployeePaginated(currentPage, pageSize);
+            getEmployeePaginated(currentPage, pageSize, '');
             $('#add-form')[0].reset()
             var myModalEl = document.getElementById('addStaticBackdrop')
             var modal = bootstrap.Modal.getInstance(myModalEl) 
@@ -60,7 +118,7 @@ $('#update-form').submit(function(e){
             }
         ),
         success: function (data, textStatus) {  // Success
-            getEmployeePaginated(currentPage, pageSize);
+            getEmployeePaginated(currentPage, pageSize, '');
             $('#update-form')[0].reset()
             var myModalEl = document.getElementById('updateStaticBackdrop')
             var modal = bootstrap.Modal.getInstance(myModalEl) 
@@ -79,51 +137,14 @@ $('#btn-delete').click(function (e) {
         type: 'DELETE',
         contentType: "application/json;charset=utf-16",
         success: function (data, textStatus) {  // Success
-            getEmployeePaginated(currentPage, pageSize);
+            getEmployeePaginated(0, pageSize, '');
         },
         error: function (e) {
         }
     });
 })
 
-function getEmployeePaginated(page, size) {
-    // Call GET request
-    $.ajax({
-        url: employeeUrl + `?branchId=${$('#userBranches').text()}&roles=${$('#userRoles').text()}&page=${page}&size=${size}&sort=last_modified_at,desc`,
-        type: 'GET',
-        contentType: "application/json;charset=utf-16",
-        success: function (data, textStatus) {  // Success
-            console.log(data)
-            $('#list-employees').html('')
-            if (data.content.length == 0) {
-                $('#list-employees').html(`<tr><td>Không có dữ liệu</td></tr>`)
-            } else {
-                data.content.forEach((element, index) => {
-                    $('#list-employees').append(`
-                        <tr>
-                            <td>${index}</td>
-                            <td>${element.name}</td>
-                            <td>${element.email}</td>
-                            <td>${element.telephone}</td>
-                            <td>${element.gender}</td>
-                            <td>${element.birthday}</td>s
-                            <td>${element.address}</td>
-                            <td>${element.roles == 'ROLE_EMPLOYEE' ? 'Nhân viên' : 'Quản lý'}</td>
-                            <td>${element.branches.name}</td>
-                            <td>
-                                <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#updateStaticBackdrop" onclick="showUpdateModal('${element.id}')">Chỉnh sửa</button>
-                                <button  class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteStaticBackdrop" onclick="showDeleteModal('${element.id}','${element.email}')" >Xóa</button>
-                            </td>
-                        </tr>
-                    `)
-                });
-            }
-        },
-        error: function (e) {
-            $('#list-employees').html(`<tr><td>Không có dữ liệu</td></tr>`)
-        }
-    });
-}
+
 function showDeleteModal(id, email) {
     $('#delete-modal-message').text(`Xác nhận xóa nhân viên có email: ${email} ?`)
     $('#delete-employee-id').val(id)
@@ -149,3 +170,7 @@ function showUpdateModal(id){
     });
    
 }
+$('#search-employee').keyup(function(e){
+    search = $('#search-employee').val()
+    getEmployeePaginated(currentPage, pageSize,search);
+})
