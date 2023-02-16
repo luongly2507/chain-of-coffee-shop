@@ -34,7 +34,7 @@ public class BranchServiceImpl implements BranchService{
     
     // Get Mapping - Get All
     @Override
-    public List<BranchResponse> getAllBranchs() {
+    public List<BranchResponse> getAllBranches() {
         return branchRepository.findAll().stream().map(
             branch -> branchMapper.toBranchResponse(branch)
         ).toList();
@@ -42,9 +42,13 @@ public class BranchServiceImpl implements BranchService{
 
     // Get Mapping - Get By Page
     @Override
-    public Page<BranchResponse> getAllBranchs(Pageable pageable) {
-        return branchRepository.findAll(pageable)
-        .map(branch->branchMapper.toBranchResponse(branch));
+    public Page<BranchResponse> getAllBranches(String key, Pageable pageable) {
+        if (key != null) {
+            return getAllBranchesByName(key, pageable);
+        } else {
+            return branchRepository.findAll(pageable).map(branch->branchMapper.toBranchResponse(branch));
+
+        }
     }
 
     // Get Mapping - Get By Id
@@ -97,7 +101,12 @@ public class BranchServiceImpl implements BranchService{
     }
 
     @Override
-    public Page<BranchResponse> getAllBranchsByName(String search, Pageable pageable) {
+    public Page<BranchResponse> getAllBranchesByName(String search, Pageable pageable) {
         return  branchRepository.findByName(search.toLowerCase(),pageable).map(branch->branchMapper.toBranchResponse(branch));
+    }
+
+    @Override
+    public long getCountBranch() {
+        return branchRepository.count();
     }
 }

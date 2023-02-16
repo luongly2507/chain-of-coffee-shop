@@ -1,5 +1,6 @@
 package com.app.coffee.repository;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -15,7 +16,13 @@ import com.app.coffee.entity.Tag;
 public interface TagRepository extends JpaRepository<Tag, UUID>{
     boolean existsByName(String name);
 
-    @Query(value = "SELECT * FROM Tag t WHERE LOWER(t.name) LIKE %:key%", 
-    countQuery = "SELECT count(id) FROM Tag t WHERE LOWER(t.name) LIKE %:key%", nativeQuery = true)
-    Page<Tag> findByName(@Param("key") String key, Pageable pageable);
+    @Query(value = "SELECT * FROM Tag t WHERE LOWER(t.name) LIKE %:key% AND t.branch_id = :branchId", 
+    countQuery = "SELECT count(id) FROM Tag t WHERE LOWER(t.name) LIKE %:key% AND t.branch_id = :branchId", nativeQuery = true)
+    Page<Tag> findByName(@Param("key") String key, @Param("branchId") UUID branchId, Pageable pageable);
+    @Query(value = "SELECT * FROM Tag t WHERE t.branch_id = :branchId", 
+    countQuery = "SELECT count(id) FROM Tag t WHERE WHERE t.branch_id = :branchId", nativeQuery = true)
+    Page<Tag> findAllByBranchID(@Param("branchId") UUID branchId, Pageable pageable);
+    
+    @Query(value = "SELECT * FROM Tag t WHERE t.branch_id = :branchId", nativeQuery = true)
+    List<Tag> findAllTagsByBranchID(@Param("branchId") UUID branchId);
 }

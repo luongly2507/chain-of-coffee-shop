@@ -14,10 +14,11 @@ import jakarta.validation.Valid;
 
 public interface TagService {
     public List<TagResponse> getAllTags();
-    public Page<TagResponse> getAllTags(Pageable pageable);
+    public Page<TagResponse> getAllTags(String key, UUID branchId, Pageable pageable);
     public TagResponse getTagById(UUID tagId);
     public void deleteTag(UUID tagId);
     public TagResponse createTag(@Valid CreateTagRequest createTagRequest);
     public void updateTag(UUID tagId, @Valid UpdateTagRequest updateTagRequest);
-    public Page<TagResponse> getAllTagsByName(String search, Pageable pageable);
+    public Page<TagResponse> getAllTagsByName(String search, UUID branchId, Pageable pageable);
+    public List<TagResponse> getAllTagsByBranchId(UUID branchId);
 }

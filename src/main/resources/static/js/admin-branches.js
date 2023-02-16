@@ -1,16 +1,18 @@
-const categoryUrl =  domain + `/api/v1/categories`;
+const branchUrl = domain + `/api/v1/branches`;
 let currentPage = 0;
 let pageSize = 5;
 let totalPages;
 let search = '';
+let tags = [];
+
 // Get First Page
-getCategoryPaginated(currentPage, pageSize, search);
-function getCategoryPaginated(page, size, search) {
+getBranchPaginated(currentPage, pageSize, search);
+function getBranchPaginated(page, size, search) {
     let url;
     if (search == '') {
-        url = categoryUrl + `?page=${page}&size=${size}&sort=lastModifiedAt,desc`;
+        url = branchUrl + `?page=${page}&size=${size}&sort=lastModifiedAt,desc`;
     } else {
-        url = categoryUrl + `?page=${page}&size=${size}&sort=last_modified_at,desc&key=${search}`
+        url = branchUrl + `?page=${page}&size=${size}&sort=last_modified_at,desc&key=${search}`
     }
     // Call GET request
     $.ajax({
@@ -20,16 +22,19 @@ function getCategoryPaginated(page, size, search) {
         success: function (data, textStatus) {  // Success
             totalPages = data.totalPages
             currentPage = page
-            $('#list-categories').html('')
+            $('#list-branches').html('')
             if (data.content.length == 0) {
-                $('#list-categories').html(`<tr><td>Không có dữ liệu</td></tr>`)
+                $('#list-branches').html(`<tr><td>Không có dữ liệu</td></tr>`)
             } else {
+                console.log(data)
                 data.content.forEach((element, index) => {
-                    $('#list-categories').append(`
+                    console.log(element.tags)
+                    $('#list-branches').append(`
                         <tr>
                             <td>${index}</td>
                             <td>${element.name}</td>
-                            <td>${element.description}</td>
+                            <td>${element.address}</td>
+                            <td>${element.description }</td>
                             <td style="width:15%">
                                 <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#updateStaticBackdrop" onclick="showUpdateModal('${element.id}')">Chỉnh sửa</button>
                                 <button  class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteStaticBackdrop" onclick="showDeleteModal('${element.id}','${element.name}')" >Xóa</button>
@@ -41,37 +46,39 @@ function getCategoryPaginated(page, size, search) {
                 if (data.totalElements > data.size) {
                     let pages = pagination(currentPage, data.totalPages);
                     pages.forEach(element => {
-                        if (currentPage + 1 == element) {
+                        if (currentPage + 1 == element || element == '...') {
                             $('#pagination').append(`<li class="page-item disabled"><a class="page-link" href="#">${element}</a></li>`);
 
                         } else {
-                            $('#pagination').append(`<li class="page-item"><a onclick="getCategoryPaginated(${element - 1}, ${size}, '${search}')" class="page-link" href="#">${element}</a></li>`);
+                            $('#pagination').append(`<li class="page-item"><a onclick="getBranchPaginated(${element - 1}, ${size}, '${search}')" class="page-link" href="#">${element}</a></li>`);
                         }
                     })
                 }
             }
         },
         error: function (e) {
-            $('#list-categories').html(`<tr><td>Không có dữ liệu</td></tr>`)
+            $('#list-branches').html(`<tr><td>Không có dữ liệu</td></tr>`)
         }
     });
 }
-// Create Category
+// Create Branch
 $('#add-form').submit(function (e) {
     e.preventDefault();
     $('#add-alert').html('')
     $.ajax({
-        url: categoryUrl,
+        url: branchUrl,
         type: 'POST',
         contentType: "application/json;charset=utf-16",
         data: JSON.stringify(
             {
-                name: $('#add-category-name').val(),
-                description: $('#add-category-description').val()
+                name: $('#add-branch-name').val(),
+                address: $('#add-branch-address').val(),
+                description: $('#add-branch-description').val(),
+                tags: tags
             }
         ),
         success: function (data, textStatus) {  // Success
-            getCategoryPaginated(currentPage, pageSize, '');
+            getBranchPaginated(currentPage, pageSize, '');
             $('#add-form')[0].reset()
             var myModalEl = document.getElementById('addStaticBackdrop')
             var modal = bootstrap.Modal.getInstance(myModalEl)
@@ -82,25 +89,25 @@ $('#add-form').submit(function (e) {
         }
     });
 })
-// Update Category
+// Update Branch
 $('#update-form').submit(function (e) {
     e.preventDefault();
     $('#update-alert').html('')
-    console.log(categoryUrl + `/${ $('#update-category-id').val()}`);
+    console.log(branchUrl + `/${$('#update-branch-id').val()}`);
     $.ajax({
-        url: categoryUrl + `/${ $('#update-category-id').val()}`,
+        url: branchUrl + `/${$('#update-branch-id').val()}`,
         type: 'PUT',
         contentType: "application/json;charset=utf-16",
         data: JSON.stringify(
             {
 
-                name: $('#update-category-name').val(),
-                description: $('#update-category-description').val()
-
+                name: $('#update-branch-name').val(),
+                description: $('#update-branch-description').val(),
+                address:  $('#update-branch-address').val(),
             }
         ),
         success: function (data, textStatus) {  // Success
-            getCategoryPaginated(currentPage, pageSize, '');
+            getBranchPaginated(currentPage, pageSize, '');
             $('#update-form')[0].reset()
             var myModalEl = document.getElementById('updateStaticBackdrop')
             var modal = bootstrap.Modal.getInstance(myModalEl)
@@ -111,15 +118,15 @@ $('#update-form').submit(function (e) {
         }
     });
 })
-// Delete Category
+// Delete Branch
 $('#btn-delete').click(function (e) {
     e.preventDefault();
     $.ajax({
-        url: categoryUrl + `/${$('#delete-category-id').val()}`,
+        url: branchUrl + `/${$('#delete-branch-id').val()}`,
         type: 'DELETE',
         contentType: "application/json;charset=utf-16",
         success: function (data, textStatus) {  // Success
-            getCategoryPaginated(0, pageSize, '');
+            getBranchPaginated(0, pageSize, '');
         },
         error: function (e) {
         }
@@ -128,18 +135,20 @@ $('#btn-delete').click(function (e) {
 
 
 function showDeleteModal(id, name) {
-    $('#delete-modal-message').text(`Xác nhận xóa thể loại: ${name} ?`)
-    $('#delete-category-id').val(id)
+    $('#delete-modal-message').text(`Xác nhận xóa chi nhánh: ${name} ?`)
+    $('#delete-branch-id').val(id)
 }
 function showUpdateModal(id) {
     $.ajax({
-        url: categoryUrl + `/${id}`,
+        url: branchUrl + `/${id}`,
         type: 'GET',
         contentType: "application/json;charset=utf-16",
         success: function (data, textStatus) {  // Success
-            $('#update-category-id').val(data.id);
-            $('#update-category-name').val(data.name);
-            $('#update-category-description').val(data.description);
+            $('#update-branch-id').val(data.id);
+            $('#update-branch-name').val(data.name);
+            $('#update-branch-address').val(data.address);
+
+            $('#update-branch-description').val(data.description);
 
         },
         error: function (e) {
@@ -147,7 +156,7 @@ function showUpdateModal(id) {
     });
 
 }
-$('#search-category').keyup(function (e) {
-    search = $('#search-category').val()
-    getCategoryPaginated(currentPage, pageSize, search);
+$('#search-branch').keyup(function (e) {
+    search = $('#search-branch').val()
+    getBranchPaginated(currentPage, pageSize, search);
 })

@@ -15,6 +15,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,6 +30,7 @@ import lombok.ToString;
 @Data
 @EqualsAndHashCode(callSuper=false)
 @Entity(name="tag")
+@Table(uniqueConstraints = @UniqueConstraint(columnNames= {"branch_id","name"}))
 public class Tag  extends Auditable<String>{
     @Id
     @Column(nullable = false, updatable = false)

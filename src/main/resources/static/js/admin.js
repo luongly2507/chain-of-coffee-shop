@@ -1,3 +1,4 @@
+const domain = 'http://localhost:8080';
 function pagination(c, m) {
     var current = c,
         last = m,

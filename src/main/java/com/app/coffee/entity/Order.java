@@ -36,26 +36,19 @@ public class Order {
     private UUID id;
 
     @Column
-    @Min(0)
     private Double total_money;
-
-    @Column
-    @Min(0)
-    @Max(100)
-    private Double discount;
-
 
     @Column(columnDefinition = "TEXT")
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id",referencedColumnName="id")
+    @JoinColumn(name = "customer_id", nullable = true, referencedColumnName="id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "tag_id",referencedColumnName="id")
+    @JoinColumn(name = "tag_id", nullable = true, referencedColumnName="id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Tag tag;

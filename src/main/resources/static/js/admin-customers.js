@@ -1,16 +1,16 @@
-const categoryUrl =  domain + `/api/v1/categories`;
+const customerUrl = domain + `/api/v1/customers`;
 let currentPage = 0;
 let pageSize = 5;
 let totalPages;
 let search = '';
 // Get First Page
-getCategoryPaginated(currentPage, pageSize, search);
-function getCategoryPaginated(page, size, search) {
+getCustomerPaginated(currentPage, pageSize, search);
+function getCustomerPaginated(page, size, search) {
     let url;
     if (search == '') {
-        url = categoryUrl + `?page=${page}&size=${size}&sort=lastModifiedAt,desc`;
+        url = customerUrl + `?page=${page}&size=${size}&sort=lastModifiedAt,desc`;
     } else {
-        url = categoryUrl + `?page=${page}&size=${size}&sort=last_modified_at,desc&key=${search}`
+        url = customerUrl + `?page=${page}&size=${size}&sort=last_modified_at,desc&key=${search}`
     }
     // Call GET request
     $.ajax({
@@ -20,22 +20,42 @@ function getCategoryPaginated(page, size, search) {
         success: function (data, textStatus) {  // Success
             totalPages = data.totalPages
             currentPage = page
-            $('#list-categories').html('')
+            $('#list-customers').html('')
             if (data.content.length == 0) {
-                $('#list-categories').html(`<tr><td>Không có dữ liệu</td></tr>`)
+                $('#list-customers').html(`<tr><td>Không có dữ liệu</td></tr>`)
             } else {
                 data.content.forEach((element, index) => {
-                    $('#list-categories').append(`
+                    if ($('#userRoles').text() == 'admin') {
+                        $('#list-customers').append(`
                         <tr>
                             <td>${index}</td>
                             <td>${element.name}</td>
-                            <td>${element.description}</td>
+                            <td>${element.gender}</td>
+                            <td>${element.telephone}</td>
+                            <td>${element.rank}</td>
+                            <td>${element.accumulatedPoints}</td>
                             <td style="width:15%">
                                 <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#updateStaticBackdrop" onclick="showUpdateModal('${element.id}')">Chỉnh sửa</button>
-                                <button  class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteStaticBackdrop" onclick="showDeleteModal('${element.id}','${element.name}')" >Xóa</button>
+                                <button  class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteStaticBackdrop"  onclick="showDeleteModal('${element.id}','${element.name}')" >Xóa</button>
                             </td>
                         </tr>
                     `)
+                    } else {
+                        $('#list-customers').append(`
+                        <tr>
+                            <td>${index}</td>
+                            <td>${element.name}</td>
+                            <td>${element.gender}</td>
+                            <td>${element.telephone}</td>
+                            <td>${element.rank}</td>
+                            <td>${element.accumulatedPoints}</td>
+                            <td style="width:15%">
+                                <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#updateStaticBackdrop" onclick="showUpdateModal('${element.id}')">Chỉnh sửa</button>
+                            </td>
+                        </tr>
+                    `)
+                    }
+                 
                 });
                 $('#pagination').html('')
                 if (data.totalElements > data.size) {
@@ -45,33 +65,34 @@ function getCategoryPaginated(page, size, search) {
                             $('#pagination').append(`<li class="page-item disabled"><a class="page-link" href="#">${element}</a></li>`);
 
                         } else {
-                            $('#pagination').append(`<li class="page-item"><a onclick="getCategoryPaginated(${element - 1}, ${size}, '${search}')" class="page-link" href="#">${element}</a></li>`);
+                            $('#pagination').append(`<li class="page-item"><a onclick="getCustomerPaginated(${element - 1}, ${size}, '${search}')" class="page-link" href="#">${element}</a></li>`);
                         }
                     })
                 }
             }
         },
         error: function (e) {
-            $('#list-categories').html(`<tr><td>Không có dữ liệu</td></tr>`)
+            $('#list-customers').html(`<tr><td>Không có dữ liệu</td></tr>`)
         }
     });
 }
-// Create Category
+// Create Customer
 $('#add-form').submit(function (e) {
     e.preventDefault();
     $('#add-alert').html('')
     $.ajax({
-        url: categoryUrl,
+        url: customerUrl,
         type: 'POST',
         contentType: "application/json;charset=utf-16",
         data: JSON.stringify(
             {
-                name: $('#add-category-name').val(),
-                description: $('#add-category-description').val()
+                name: $('#add-customer-name').val(),
+                gender: $('#add-customer-gender').val(),
+                telephone: $('#add-customer-telephone').val(),
             }
         ),
         success: function (data, textStatus) {  // Success
-            getCategoryPaginated(currentPage, pageSize, '');
+            getCustomerPaginated(currentPage, pageSize, '');
             $('#add-form')[0].reset()
             var myModalEl = document.getElementById('addStaticBackdrop')
             var modal = bootstrap.Modal.getInstance(myModalEl)
@@ -82,25 +103,26 @@ $('#add-form').submit(function (e) {
         }
     });
 })
-// Update Category
+// Update Customer
 $('#update-form').submit(function (e) {
     e.preventDefault();
     $('#update-alert').html('')
-    console.log(categoryUrl + `/${ $('#update-category-id').val()}`);
+    console.log(customerUrl + `/${$('#update-customer-id').val()}`);
     $.ajax({
-        url: categoryUrl + `/${ $('#update-category-id').val()}`,
+        url: customerUrl + `/${$('#update-customer-id').val()}`,
         type: 'PUT',
         contentType: "application/json;charset=utf-16",
         data: JSON.stringify(
             {
 
-                name: $('#update-category-name').val(),
-                description: $('#update-category-description').val()
-
+                name: $('#update-customer-name').val(),
+                telephone: $('#update-customer-telephone').val(),
+                gender: $('#update-customer-gender').val(),
+                accumulatedPoints: $('#update-customer-accumulated-points').val()
             }
         ),
         success: function (data, textStatus) {  // Success
-            getCategoryPaginated(currentPage, pageSize, '');
+            getCustomerPaginated(currentPage, pageSize, '');
             $('#update-form')[0].reset()
             var myModalEl = document.getElementById('updateStaticBackdrop')
             var modal = bootstrap.Modal.getInstance(myModalEl)
@@ -111,15 +133,15 @@ $('#update-form').submit(function (e) {
         }
     });
 })
-// Delete Category
+// Delete Customer
 $('#btn-delete').click(function (e) {
     e.preventDefault();
     $.ajax({
-        url: categoryUrl + `/${$('#delete-category-id').val()}`,
+        url: customerUrl + `/${$('#delete-customer-id').val()}`,
         type: 'DELETE',
         contentType: "application/json;charset=utf-16",
         success: function (data, textStatus) {  // Success
-            getCategoryPaginated(0, pageSize, '');
+            getCustomerPaginated(0, pageSize, '');
         },
         error: function (e) {
         }
@@ -129,17 +151,19 @@ $('#btn-delete').click(function (e) {
 
 function showDeleteModal(id, name) {
     $('#delete-modal-message').text(`Xác nhận xóa thể loại: ${name} ?`)
-    $('#delete-category-id').val(id)
+    $('#delete-customer-id').val(id)
 }
 function showUpdateModal(id) {
     $.ajax({
-        url: categoryUrl + `/${id}`,
+        url: customerUrl + `/${id}`,
         type: 'GET',
         contentType: "application/json;charset=utf-16",
         success: function (data, textStatus) {  // Success
-            $('#update-category-id').val(data.id);
-            $('#update-category-name').val(data.name);
-            $('#update-category-description').val(data.description);
+            $('#update-customer-id').val(data.id);
+            $('#update-customer-name').val(data.name);
+            $('#update-customer-telephone').val(data.telephone);
+            $('#update-customer-gender').val(data.gender);
+            $('#update-customer-accumulated-points').val(data.accumulatedPoints);
 
         },
         error: function (e) {
@@ -147,7 +171,7 @@ function showUpdateModal(id) {
     });
 
 }
-$('#search-category').keyup(function (e) {
-    search = $('#search-category').val()
-    getCategoryPaginated(currentPage, pageSize, search);
+$('#search-customer').keyup(function (e) {
+    search = $('#search-customer').val()
+    getCustomerPaginated(currentPage, pageSize, search);
 })

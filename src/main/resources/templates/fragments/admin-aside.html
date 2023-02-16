@@ -37,7 +37,7 @@
                         <p>Nhân viên</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="hasRole('ADMIN')">
                     <a href="/admin/products" class="nav-link" th:classappend="${site} == 'products' ? 'active' : ''">
                         <i class="nav-icon fa-brands fa-product-hunt"></i>    
                         <p>Sản phẩm </p>
@@ -49,29 +49,28 @@
                         <p>Hóa đơn</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="/admin/ingredients" class="nav-link"  th:classappend="${site} == 'ingredients' ? 'active' : ''">
-                        <i class="nav-icon far fa-image"></i>
-                        <p>Nguyên liệu</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/admin/suppliers" class="nav-link"  th:classappend="${site} == 'suppliers' ? 'active' : ''">
-                        <i class="nav-icon fa-solid fa-truck-field-un"></i>
-                        <p>Nhà cung cấp</p>
-                    </a>
-                </li>
-
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="hasRole('ADMIN')" >
                     <a href="/admin/categories" class="nav-link"  th:classappend="${site} == 'categories' ? 'active' : ''">
                         <i class="nav-icon fas fa-table"></i>
                             <p>Thể loại</p>
+                    </a>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('ADMIN')" >
+                    <a href="/admin/branches" class="nav-link"  th:classappend="${site} == 'branches' ? 'active' : ''">
+                        <i class="nav-icon fa-solid fa-code-branch"></i>
+                                                <p>Chi nhánh</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="/admin/tags" class="nav-link"  th:classappend="${site} == 'tags' ? 'active' : ''">
                         <i class="nav-icon fa-solid fa-tag"></i>
                         <p>Thẻ</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/customers" class="nav-link"  th:classappend="${site} == 'customers' ? 'active' : ''">
+                        <i class="nav-icon fas fa-thumbs-up"></i>
+                        <p>Khách hàng</p>
                     </a>
                 </li>
                 <li class="nav-item">

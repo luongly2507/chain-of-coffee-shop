@@ -1,35 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head th:replace="fragments/head.html :: head(${title})"></head>
+<head th:replace="~{fragments/head.html :: head(${title})}"></head>
 <body class="hold-transition sidebar-mini layout-fixed">
   <div class="wrapper">
     <!-- Navbar -->
-    <nav th:replace="@{/fragments/admin-nav.html}"></nav>
+    <nav th:replace="~{/fragments/admin-nav.html}"></nav>
     <!--Aside-->
-    <aside th:replace="fragments/admin-aside.html :: aside('categories')"></aside>
+    <aside th:replace="~{fragments/admin-aside.html :: aside('customers')}"></aside>
     <!--Main-->
     <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-            <div th:replace="~{fragments/content-header.html :: contentHeader('Categories','Categories')}"></div>
+            <div th:replace="~{fragments/content-header.html :: contentHeader('Customers','Customers')}"></div>
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addStaticBackdrop">Thêm
-                            thể loại</button>
-                        <input type="text" id="search-category" placeholder="Tìm kiếm ... " class="form-control w-25">
-                    </div>
-                    <div class="table-responsive-sm">
+                            khách hàng</button>
+                        <input type="text" id="search-customer" placeholder="Tìm kiếm ... " class="form-control w-25">
+                    </div> 
+                    <div class="table-responsive-sm">   
                         <table class="table ">
                             <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Tên</th>
-                                    <th>Mô tả</th>
+                                    <th>Giới tính</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Thứ hạng</th>
+                                    <th>Điểm tích lũy</th>
                                     <th>Xử lý</th>
                                 </tr>
                             </thead>
-                            <tbody id="list-categories">
+                            <tbody id="list-customers">
                             </tbody>
                         </table>
                         <nav>
@@ -46,7 +49,7 @@
                     <div class="modal-content">
                         <form class="m-auto w-100" id="add-form">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="addStaticBackdropLabel" >Thêm thể loại</h5>
+                                <h5 class="modal-title" id="addStaticBackdropLabel" >Thêm khách hàng</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -54,13 +57,24 @@
                                 <div class="row">
                                     <div class="col">
                                         <label for="">Tên: </label>
-                                        <input type="text" id="add-category-name" class="form-control" required>
+                                        <input type="text" id="add-customer-name" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <label for="">Mô tả: </label>
-                                        <textarea name="" id="add-category-description"class="form-control" cols="30" rows="10"></textarea>
+                                        <label for="">Giới tính: </label>
+                                        <select name="" id="add-customer-gender" class="form-control">
+                                            <option value="Nam">Nam</option>
+                                            <option value="Nữ">Nữ</option>
+                                            <option value="Khác">Khác</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="">Số điện thoại: </label>
+                                        <input type="tel" id="add-customer-telephone" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -71,7 +85,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                <button type="submit" class="btn btn-success"  >Thêm thể loại</button>
+                                <button type="submit" class="btn btn-success"  >Thêm khách hàng</button>
                             </div>
                         </form>
                     </div>
@@ -84,7 +98,7 @@
                     <div class="modal-content">
                       <form class="m-auto w-100" id="update-form">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="addStaticBackdropLabel" >Chỉnh sửa thể loại</h5>
+                            <h5 class="modal-title" id="addStaticBackdropLabel" >Chỉnh sửa khách hàng</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
@@ -92,15 +106,30 @@
                             <div class="row">
                                 <div class="col">
                                     <label for="">Tên: </label>
-                                    <input type="text" id="update-category-name" class="form-control" required>
-                                    <input type="text" value="" id="update-category-id" hidden>
+                                    <input type="text" id="update-customer-name" class="form-control" required>
+                                    <input type="text" value="" id="update-customer-id" hidden>
 
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <label for="">Mô tả: </label>
-                                    <textarea name="" id="update-category-description"class="form-control" cols="30" rows="10"></textarea>
+                                    <label for="">Số điện thoại: </label>
+                                    <input type="text" id="update-customer-telephone" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="">Giới tính: </label>
+                                    <select name="" id="update-customer-gender" class="form-control">
+                                        <option value="Nam">Nam</option>
+                                        <option value="Nữ">Nữ</option>
+                                        <option value="Khác">Khác</option>
+                                    </select>                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="">Điểm tích lũy: </label>
+                                    <input type="number" id="update-customer-accumulated-points" class="form-control" required>
                                 </div>
                             </div>
                             <div class="row">
@@ -124,12 +153,12 @@
                     <div class="modal-content">
                         <form class="m-auto">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="deleteStaticBackdropLabel">Xác nhận xóa thể loại</h5>
+                                <h5 class="modal-title" id="deleteStaticBackdropLabel">Xác nhận xóa khách hàng</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                <label id="delete-modal-message"></label>
-                               <input type="text"  id="delete-category-id" hidden>
+                               <input type="text"  id="delete-customer-id" hidden>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
@@ -141,7 +170,7 @@
             </div>
     </div>
   </div>
-  <script th:replace="@{/fragments/script.html}"></script>
-  <script th:src="@{/js/admin-categories.js}"></script>
+  <script th:replace="~{/fragments/script.html}"></script>
+  <script th:src="@{/js/admin-customers.js}"></script>
 </body>
 </html>

@@ -8,25 +8,18 @@
         <!-- Navbar -->
         <nav th:replace="~{/fragments/admin-nav.html}"></nav>
         <!--Aside-->
-        <aside th:replace="~{fragments/admin-aside.html :: aside('tags')}"></aside>
+        <aside th:replace="~{fragments/admin-aside.html :: aside('branches')}"></aside>
         <!--Main-->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-            <div th:replace="~{fragments/content-header.html :: contentHeader('Tags','Tags')}"></div>
+            <div th:replace="~{fragments/content-header.html :: contentHeader('Branches','Branches')}"></div>
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
                     <div class="d-flex justify-content-between">
-                        <button class="btn btn-success" data-bs-toggle="modal" id="button-add-tag"
-                            data-bs-target="#addStaticBackdrop">Thêm
-                            thẻ</button>
-                        <div class="d-flex w-50 justify-content-between">
-                            <select name="" class="form-control dropdown w-25" id="select-branch" sec:authorize="hasRole('ADMIN')">
-                                <option th:value="${branch.id}" th:each="branch: ${branches}" th:utext="${branch.name}"></option>
-                            </select>
-                            <input type="text" id="search-tag" placeholder="Tìm kiếm ... " class="form-control">
-                        </div>
-
+                        <button class="btn btn-success" data-bs-toggle="modal" id ="button-add-branch" data-bs-target="#addStaticBackdrop">Thêm
+                            chi nhánh</button>
+                        <input type="text" id="search-branch" placeholder="Tìm kiếm ... " class="form-control w-25">
                     </div>
                     <div class="table-responsive-sm">
                         <table class="table ">
@@ -34,12 +27,12 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Tên</th>
-                                    <th>Chi nhánh</th>
-                                    <th>Tình trạng</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Mô tả</th>
                                     <th>Xử lý</th>
                                 </tr>
                             </thead>
-                            <tbody id="list-tags">
+                            <tbody id="list-branches">
                             </tbody>
                         </table>
                         <nav>
@@ -56,7 +49,7 @@
                     <div class="modal-content">
                         <form class="m-auto w-100" id="add-form">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="addStaticBackdropLabel">Thêm thẻ</h5>
+                                <h5 class="modal-title" id="addStaticBackdropLabel">Thêm chi nhánh</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -64,20 +57,23 @@
                                 <div class="row">
                                     <div class="col">
                                         <label for="">Tên: </label>
-                                        <input type="text" id="add-tag-name" class="form-control" required>
+                                        <input type="text" id="add-branch-name" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <label for="" sec:authorize="hasRole('ADMIN')">Chi nhánh: </label>
-                                        <input type="text" readonly th:value="${user.branches.id}" hidden id="add-tag-branch" sec:authorize="hasRole('MANAGER')" class="form-control">
-                                        <select name="" class="form-control dropdown " id="add-tag-branch" sec:authorize="hasRole('ADMIN')">
-                                            <option th:value="${branch.id}" th:each="branch: ${branches}" th:utext="${branch.name}"></option>
-                                        </select>
+                                        <label for="">Địa chỉ: </label>
+                                        <input type="text" id="add-branch-address" class="form-control" required>
                                     </div>
                                 </div>
-                                
-
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="">Mô tả: </label>
+                                        <textarea name="" id="add-branch-description" class="form-control" cols="30"
+                                            rows="3"></textarea>
+                                    </div>
+                                </div>
+                               
                                 <div class="row">
                                     <div class="col" id="add-alert">
 
@@ -86,7 +82,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                <button type="submit" class="btn btn-success">Thêm thẻ</button>
+                                <button type="submit" class="btn btn-success">Thêm chi nhánh</button>
                             </div>
                         </form>
                     </div>
@@ -99,7 +95,7 @@
                     <div class="modal-content">
                         <form class="m-auto w-100" id="update-form">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="addStaticBackdropLabel">Chỉnh sửa thẻ</h5>
+                                <h5 class="modal-title" id="addStaticBackdropLabel">Chỉnh sửa chi nhánh</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -107,22 +103,24 @@
                                 <div class="row">
                                     <div class="col">
                                         <label for="">Tên: </label>
-                                        <input type="text" id="update-tag-name" class="form-control" required>
-                                        <input type="text" value="" id="update-tag-id" hidden>
+                                        <input type="text" id="update-branch-name" class="form-control" required>
+                                        <input type="text" value="" id="update-branch-id" hidden>
 
                                     </div>
                                 </div>
-                               
                                 <div class="row">
                                     <div class="col">
-                                        <label for="">Trạng thái: </label>
-                                        <select name="" class="form-control" id="update-tag-status">
-                                            <option value="Trống">Trống</option>
-                                            <option value="Đang sử dụng">Đang sử dụng</option>
-                                        </select>
+                                        <label for="">Địa chỉ: </label>
+                                        <input type="text" id="update-branch-address" class="form-control">
                                     </div>
                                 </div>
-                               
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="">Mô tả: </label>
+                                        <textarea name="" id="update-branch-description" class="form-control" cols="30"
+                                            rows="10"></textarea>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col" id="update-alert">
 
@@ -131,7 +129,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                <button type="submit" class="btn btn-info">Cập nhật</button>
+                                <button type="submit" class="btn btn-info" >Cập nhật</button>
                             </div>
                         </form>
                     </div>
@@ -144,13 +142,13 @@
                     <div class="modal-content">
                         <form class="m-auto">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="deleteStaticBackdropLabel">Xác nhận xóa thẻ</h5>
+                                <h5 class="modal-title" id="deleteStaticBackdropLabel">Xác nhận xóa chi nhánh</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <label id="delete-modal-message"></label>
-                                <input type="text" id="delete-tag-id" hidden>
+                                <input type="text" id="delete-branch-id" hidden>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
@@ -164,7 +162,7 @@
         </div>
     </div>
     <script th:replace="~{/fragments/script.html}"></script>
-    <script th:src="@{/js/admin-tags.js}"></script>
+    <script th:src="@{/js/admin-branches.js}"></script>
 </body>
 
 </html>

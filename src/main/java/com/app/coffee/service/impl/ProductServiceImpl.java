@@ -49,6 +49,7 @@ public class ProductServiceImpl implements ProductService {
     // Get Mapping - Get By Page
     @Override
     public Page<ProductResponse> getAllProducts(String key, Pageable pageable) {
+        System.out.println(key);
         return productRepository.findAll(pageable)
                 .map(product -> productMapper.toProductResponse(product));
     }
@@ -86,7 +87,7 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(
                         () -> new ResourceNotFoundException("Product Not Found."));
         // Check image
-        if (image != null) {
+        if (!image.isEmpty() && image != null) {
             try {
                 FileSystemUtils.deleteRecursively(storageService.load(product.getImage()));
             } catch (IOException e) {

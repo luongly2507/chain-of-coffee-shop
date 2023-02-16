@@ -123,5 +123,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(search.toLowerCase(), pageable).map(user -> userMapper.toUserResponse(user));
     }
 
+    @Override
+    public long getCountUser() {
+        return userRepository.count();
+    }
+
   
 }

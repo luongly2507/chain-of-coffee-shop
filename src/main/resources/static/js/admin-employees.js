@@ -1,4 +1,4 @@
-const employeeUrl = `http://localhost:8080/api/v1/employees`;
+const employeeUrl =  domain + `/api/v1/employees`;
 let currentPage = 0;
 let pageSize = 5;
 let totalPages;

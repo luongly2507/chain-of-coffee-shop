@@ -98,9 +98,14 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public Page<CustomerResponse> searchCustomer(String search, Pageable pageable) {
-        return customerRepository
-        .findByNameAndTelephone(search.toLowerCase(),pageable)
-        .map(customer->customerMapper.toCustomerResponse(customer));
+        if (search != null) {
+            return customerRepository
+            .findByNameAndTelephone(search.toLowerCase(),pageable)
+            .map(customer->customerMapper.toCustomerResponse(customer));
+        } else {
+            return customerRepository.findAll(pageable)  .map(customer->customerMapper.toCustomerResponse(customer));
+        }
+      
         
     }
 }

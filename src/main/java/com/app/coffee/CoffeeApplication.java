@@ -10,7 +10,6 @@ import com.app.coffee.config.StorageProperties;
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
 @EnableJpaRepositories
-
 public class CoffeeApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CoffeeApplication.class, args);

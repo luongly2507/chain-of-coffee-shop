@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.app.coffee.entity.Branch;
+import com.app.coffee.entity.Tag;
 import com.app.coffee.mapper.BranchMapper;
 import com.app.coffee.mapper.TagMapper;
+import com.app.coffee.mapper.UserMapper;
 import com.app.coffee.payload.request.CreateBranchRequest;
 import com.app.coffee.payload.request.UpdateBranchRequest;
 import com.app.coffee.payload.response.BranchResponse;
@@ -15,6 +17,10 @@ public class BranchMapperImpl implements BranchMapper {
 
     @Autowired
     private TagMapper tagMapper;
+
+    
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public BranchResponse toBranchResponse(Branch branch) {
@@ -26,7 +32,6 @@ public class BranchMapperImpl implements BranchMapper {
                 .name(branch.getName())
                 .address(branch.getAddress())
                 .description(branch.getDescription())
-                .tags(branch.getTags().stream().map(t -> tagMapper.toTagResponse(t)).toList())
                 .createdAt(branch.getCreatedAt())
                 .createdBy(branch.getCreatedBy())
                 .lastModifiedAt(branch.getLastModifiedAt())
@@ -39,11 +44,12 @@ public class BranchMapperImpl implements BranchMapper {
         if (createBranchRequest == null) {
             return null;
         }
-        return Branch.builder()
+        Branch branch =  Branch.builder()
                 .name(createBranchRequest.getName())
                 .address(createBranchRequest.getAddress())
                 .description(createBranchRequest.getDescription())
                 .build();
+                return branch;
     }
 
     @Override
@@ -55,5 +61,4 @@ public class BranchMapperImpl implements BranchMapper {
         branch.setAddress(updateBranchRequest.getAddress());
         branch.setDescription(updateBranchRequest.getDescription());
     }
-
 }

@@ -12,6 +12,8 @@ import com.app.coffee.payload.response.UserResponse;
 import com.app.coffee.service.AuthService;
 import com.app.coffee.service.BranchService;
 import com.app.coffee.service.CategoryService;
+import com.app.coffee.service.ProductService;
+import com.app.coffee.service.UserService;
 
 @Controller
 @RequestMapping("/admin")
@@ -21,15 +23,20 @@ public class AdminController {
     @Autowired
     AuthService authService; 
     @Autowired
+    UserService userService; 
+    @Autowired
     BranchService branchService;
     @Autowired
     CategoryService categoryService;
-    
+    @Autowired
+    ProductService productService;
    @GetMapping()
     public String adminPage(Model model){
         UserResponse userResponse = authService.getInformationUserFromEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         model.addAttribute("title","Admin | Dashboard"); 
         model.addAttribute("user", userResponse);
+        model.addAttribute("countBranch", branchService.getCountBranch());
+        model.addAttribute("countUser", userService.getCountUser());
         return "admin";
     }
     
@@ -47,6 +54,8 @@ public class AdminController {
         UserResponse userResponse = authService.getInformationUserFromEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         model.addAttribute("title","Admin | Orders Management"); 
         model.addAttribute("user", userResponse);
+        model.addAttribute("branches", branchService.getAllBranches()); 
+        model.addAttribute("products", productService.getAllProducts()); 
         return "admin-orders";
     }
     @GetMapping("/ingredients")
@@ -70,11 +79,19 @@ public class AdminController {
         model.addAttribute("user", userResponse);
         return "admin-categories";
     }
+    @GetMapping("/branches")
+    public String getBranchesPage (Model model ){
+        UserResponse userResponse = authService.getInformationUserFromEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("title","Admin | Branches Management"); 
+        model.addAttribute("user", userResponse);
+        return "admin-branches";
+    }
     @GetMapping("/tags")
     public String getTagsPage (Model model ){
         UserResponse userResponse = authService.getInformationUserFromEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         model.addAttribute("title","Admin | Tags Management"); 
         model.addAttribute("user", userResponse);
+        model.addAttribute("branches", branchService. getAllBranches());    
         return "admin-tags";
     }
     @GetMapping("/employees")
@@ -82,7 +99,14 @@ public class AdminController {
         UserResponse userResponse = authService.getInformationUserFromEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         model.addAttribute("title","Admin | Employees Management"); 
         model.addAttribute("user", userResponse);    
-        model.addAttribute("branches", branchService. getAllBranchs());    
+        model.addAttribute("branches", branchService. getAllBranches());    
         return "admin-employees";
+    }
+    @GetMapping("/customers")
+    public String getCustomersPage (Model model){
+        UserResponse userResponse = authService.getInformationUserFromEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        model.addAttribute("title","Admin | Customers Management"); 
+        model.addAttribute("user", userResponse);    
+        return "admin-customers";
     }
 }

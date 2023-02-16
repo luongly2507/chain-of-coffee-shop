@@ -1,5 +1,6 @@
 package com.app.coffee.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -10,6 +11,7 @@ import com.app.coffee.audit.Auditable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -42,12 +44,11 @@ public class Branch extends Auditable<String>{
     @Column
     private String description;
 
-    @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private Collection<Tag> tags;
+    @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Builder.Default
+    private Collection<Tag> tags = new ArrayList<>();;
 
-    @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Collection<User> users;

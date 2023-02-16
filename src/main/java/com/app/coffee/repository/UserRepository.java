@@ -28,7 +28,7 @@ public interface UserRepository extends JpaRepository<User,UUID>{
     Page<User> searchAllByAdmin(@Param("key") String key, Pageable pageable);
    
     @Query(nativeQuery = true,
-    value = "SELECT u.id, u.name, u.address, u.telephone,u.gender, u.email, u.password, u.birthday, u.branch_id, u.created_at, u.last_modified_at, u.created_by, u.last_modified_by FROM users u LEFT JOIN users_roles d ON u.id = d.users_id LEFT JOIN role r ON r.id = d.role_id WHERE r.name <> 'ROLE_ADMIN' AND r.name <> 'ROLE_MANAGER' AND  u.branch_id = :branch AND LOWER(u.name) LIKE %:key% OR u.email LIKE %:key% OR u.telephone LIKE %:key%", 
+    value = "SELECT u.id, u.name, u.address, u.telephone,u.gender, u.email, u.password, u.birthday, u.branch_id, u.created_at, u.last_modified_at, u.created_by, u.last_modified_by FROM users u LEFT JOIN users_roles d ON u.id = d.users_id LEFT JOIN role r ON r.id = d.role_id  WHERE r.name <> 'ROLE_ADMIN' AND r.name <> 'ROLE_MANAGER' AND  u.branch_id = :branch AND LOWER(u.name) LIKE %:key% OR u.email LIKE %:key% OR u.telephone LIKE %:key%", 
     countQuery = "SELECT count(u.id) FROM users u LEFT JOIN users_roles d ON u.id = d.users_id LEFT JOIN role r ON r.id = d.role_id WHERE r.name <> 'ROLE_ADMIN' AND r.name <> 'ROLE_MANAGER' AND  u.branch_id = :branch AND LOWER(u.name) LIKE %:key% OR u.email LIKE %:key% OR u.telephone LIKE %:key%")
 
     Page<User> searchAllByManager(@Param("key") String key, @Param("branch") UUID branch, Pageable pageable);

@@ -17,8 +17,63 @@
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
-         
-          </table>
+              <div class="row">
+          <div class=" col-md-3">
+            <div class="info-box">
+              <span class="info-box-icon bg-info elevation-1"><i class=" fa-solid fa-code-branch"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Chi nhánh</span>
+                <span class="info-box-number" th:utext="${countBranch}">
+                </span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Khách hàng</span>
+                <span class="info-box-number">41,410</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+
+          <div class="col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Hóa đơn</span>
+                <span class="info-box-number">760</span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class=" col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Nhân viên</span>
+                <span class="info-box-number" th:utext="${countUser}"></span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+        </div>
+            
         </div>
       </section>
     </div>

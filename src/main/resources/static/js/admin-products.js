@@ -1,4 +1,4 @@
-const productUrl = `http://localhost:8080/api/v1/products`;
+const productUrl = domain + `/api/v1/products`;
 let currentPage = 0;
 let pageSize = 5;
 let totalPages;
@@ -11,12 +11,13 @@ function getProductPaginated(page, size, search) {
     if (search == '') {
         url = productUrl + `?page=${page}&size=${size}&sort=lastModifiedAt,desc`;
     } else {
-        url = productUrl + `?page=${page}&size=${size}&sort=last_modified_at,desc&key=${search}`
+        url = productUrl + `?page=${page}&size=${size}&sort=lastModifiedAt,desc&key=${search}`
     }
     // Call GET request
     $.ajax({
         url: url,
         type: 'GET',
+        async: false,
         contentType: "application/json;charset=utf-16",
         success: function (data, textStatus) {  // Success
             totalPages = data.totalPages
@@ -69,14 +70,17 @@ $('#add-form').submit(function (e) {
         type: 'POST',
         processData: false,
         contentType: false,
+        async: false,
         data: new FormData( this ),
         success: function (data, textStatus) {  // Success
-            getProductPaginated(currentPage, pageSize, '');
+           
             $('#add-form')[0].reset()
             var myModalEl = document.getElementById('addStaticBackdrop')
             var modal = bootstrap.Modal.getInstance(myModalEl)
             modal.hide()
-        },
+            setTimeout(function(){
+                getProductPaginated(currentPage, pageSize, '');
+            },1500)        },
         error: function (e) {
             $('#add-alert').html(`<div class="alert alert-danger mt-3" role="alert">${e.responseJSON.message}</div>`)
         }
@@ -86,25 +90,21 @@ $('#add-form').submit(function (e) {
 $('#update-form').submit(function (e) {
     e.preventDefault();
     $('#update-alert').html('')
-    console.log(productUrl + `/${ $('#update-product-id').val()}`);
     $.ajax({
         url: productUrl + `/${ $('#update-product-id').val()}`,
         type: 'PUT',
-        contentType: "application/json;charset=utf-16",
-        data: JSON.stringify(
-            {
-
-                name: $('#update-product-name').val(),
-                description: $('#update-product-description').val()
-
-            }
-        ),
+        processData: false,
+        contentType: false,
+        async: false,
+        data: new FormData( this ),
         success: function (data, textStatus) {  // Success
-            getProductPaginated(currentPage, pageSize, '');
             $('#update-form')[0].reset()
             var myModalEl = document.getElementById('updateStaticBackdrop')
             var modal = bootstrap.Modal.getInstance(myModalEl)
             modal.hide()
+            setTimeout(function(){
+                getProductPaginated(currentPage, pageSize, '');
+            },1500)
         },
         error: function (e) {
             $('#update-alert').html(`<div class="alert alert-danger mt-3" role="alert">${e.responseJSON.message}</div>`)
@@ -139,6 +139,9 @@ function showUpdateModal(id) {
         success: function (data, textStatus) {  // Success
             $('#update-product-id').val(data.id);
             $('#update-product-name').val(data.name);
+            $('#update-product-price').val(data.price);
+            $('#update-product-category').val(data.category.id);
+            $('#update-product-image').attr("src","/img/upload/"+data.image);
             $('#update-product-description').val(data.description);
 
         },

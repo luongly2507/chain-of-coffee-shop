@@ -45,10 +45,10 @@ public class TagMapperImpl implements TagMapper {
         }
         return Tag.builder()
                 .name(createTagRequest.getName())
-                .status("Trống")
                 .branch(branchRepository.findById(createTagRequest.getBranchID())
-                        .orElseThrow(() -> new ResourceNotFoundException("Branch Not Found")))
-                .build();
+                .orElseThrow(()-> new ResourceNotFoundException("Not Found")))
+                .status("Trống")
+                       .build();
     }
 
     @Override

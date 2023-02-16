@@ -20,5 +20,5 @@ public interface UserService {
     public UserResponse createUser(@Valid CreateUserRequest createUserRequest);
     public void updateUser(UUID userId, @Valid UpdateUserRequest updateUserRequest);
     public Page<UserResponse> getAllUsersByEmail(String search, Pageable pageable);
-
+    public long getCountUser();
 }
